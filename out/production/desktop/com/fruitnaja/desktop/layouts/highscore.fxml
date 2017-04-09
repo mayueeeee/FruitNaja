@@ -1,38 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fruitnaja.desktop.MainController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" stylesheets="@../asset/main.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fruitnaja.desktop.MainController">
    <children>
       <ImageView blendMode="SRC_ATOP" fitHeight="808.0" fitWidth="1025.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../asset/macOS-Sierra-Wallpaper-Macbook-Wallpaper.jpg" />
+            <Image url="@../asset/background/BGTopScore.png" />
          </image>
       </ImageView>
-      <Text fill="WHITE" layoutX="313.0" layoutY="94.0" stroke="#c24a90" strokeType="OUTSIDE" strokeWidth="5.0" text="คะแนนสูงสุด" wrappingWidth="422.82354736328125">
-         <font>
-            <Font name="Cloud-Light" size="96.0" />
-         </font>
-      </Text>
-      <Button fx:id="backBtn" layoutX="456.0" layoutY="470.0" mnemonicParsing="false" onAction="#backToMain" text="back" textAlignment="CENTER">
-         <font>
-            <Font size="31.0" />
-         </font>
-         <effect>
-            <DropShadow />
-         </effect>
-      </Button>
-      <Label text="Label" fx:id="txt_ip" layoutX="432.0" layoutY="161.0"  textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="Cloud-Light" size="68.0" />
-         </font>
-      </Label>
+      <ImageView fx:id="btn_back" fitHeight="150.0" fitWidth="200.0" layoutX="417.0" layoutY="443.0" onMouseClicked="#backToMain" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
+         <image>
+            <Image url="@../asset/button/btBack.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="121.0" fitWidth="833.0" layoutX="90.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../asset/button/btTopScore.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

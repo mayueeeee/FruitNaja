@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -8,7 +10,7 @@
    <children>
       <ImageView blendMode="SRC_ATOP" fitHeight="808.0" fitWidth="1025.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../asset/background/BGTopScore.png" />
+            <Image url="@../asset/background/BG.png" />
          </image>
       </ImageView>
       <ImageView fx:id="btn_back" fitHeight="150.0" fitWidth="200.0" layoutX="417.0" layoutY="443.0" onMouseClicked="#backToMain" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
@@ -19,6 +21,21 @@
       <ImageView fitHeight="121.0" fitWidth="833.0" layoutX="90.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../asset/button/btTopScore.png" />
+         </image>
+      </ImageView>
+      <Slider layoutX="380.0" layoutY="234.0" prefWidth="253.0">
+         <effect>
+            <Glow level="0.25" />
+         </effect>
+      </Slider>
+      <ImageView fx:id="btn_play_edm" fitHeight="150.0" fitWidth="200.0" layoutX="260.0" layoutY="324.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../asset/button/btOffline.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="btn_play_mao" fitHeight="150.0" fitWidth="200.0" layoutX="533.0" layoutY="324.0" onMouseClicked="#playMao" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../asset/button/btOffline.png" />
          </image>
       </ImageView>
    </children>
