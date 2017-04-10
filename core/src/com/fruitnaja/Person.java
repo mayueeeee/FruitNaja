@@ -79,7 +79,7 @@ public abstract class Person implements Attackable {
         this.name = name;
         this.hp = hp;
         this.stamina = stamina;
-        this.pos = new Vector2(0,0);
+        this.pos = new Vector2(512/2,300/2);
         this.live = true;
         this.id = id;
         this.idS += 1;
@@ -94,10 +94,10 @@ public abstract class Person implements Attackable {
             pos.x-=100*Gdx.graphics.getDeltaTime();
         }
         else if (Gdx.input.isKeyPressed(Input.Keys.D)||Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            pos.x+=200*Gdx.graphics.getDeltaTime();
+            pos.x+=100*Gdx.graphics.getDeltaTime();
         }
         else if ((Gdx.input.isKeyPressed(Input.Keys.W)||Gdx.input.isKeyPressed(Input.Keys.UP))){
-            pos.y+=200*Gdx.graphics.getDeltaTime();
+            pos.y+=100*Gdx.graphics.getDeltaTime();
         }
         else if ((Gdx.input.isKeyPressed(Input.Keys.S)||Gdx.input.isKeyPressed(Input.Keys.DOWN))&&pos.y>0){
             pos.y-=100*Gdx.graphics.getDeltaTime();

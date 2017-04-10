@@ -16,6 +16,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	public  static SpriteBatch batch;
 	private Texture img;
 	private Texture imgB;
+	private Texture healer;
 	private Sprite bgSprite;
 	int x = 0,y = 0;
 	Person heal = new Charactor("U",200,100,0,1);
@@ -35,7 +36,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		batch = new SpriteBatch();
 		img = new Texture("chai.png");
 		imgB = new Texture("map/bg-glass.jpg");
-
+		healer = new Texture("player/char1.png");
 
 	}
 
@@ -43,16 +44,19 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	@Override
 	public void render () {
 		deltatime = Gdx.graphics.getDeltaTime();
-		mouse_position.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-		camera.unproject(mouse_position);
-
 		if (Gdx.input.isKeyPressed(Input.Keys.A)&& camera.position.x>512) {
 
-			camera.position.x -= camSpeed * deltatime;
+				camera.position.x -= camSpeed * deltatime;
+
 		}
 
 		if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-			camera.position.x += camSpeed * deltatime;
+			if(heal.getPos().x>(Gdx.graphics.getWidth()/2)){
+				camera.position.x += camSpeed * deltatime;
+			}
+			else {
+				camera.position.x += camSpeed/2 * deltatime;
+			}
 		}
 
 		if (Gdx.input.isKeyPressed(Input.Keys.S)&&camera.position.y>300) {
@@ -61,7 +65,12 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		}
 
 		if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-			camera.position.y += camSpeed * deltatime;
+			if(heal.getPos().y>(Gdx.graphics.getHeight()/2)){
+				camera.position.y += camSpeed * deltatime;
+			}
+			else {
+				camera.position.y += camSpeed/2 * deltatime;
+			}
 		}
 		camera.update();
 		System.out.println(camera.position.y);
