@@ -5,7 +5,6 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.fruitnaja.Configure;
 import com.fruitnaja.Fruitnaja;
 import com.fruitnaja.Music;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,6 +17,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.Inet4Address;
+import java.net.URL;
 
 
 /**
@@ -42,7 +42,7 @@ public class MainController{
     @FXML
     private void backToMain(MouseEvent actionEvent) throws IOException {
         stage=(Stage) btn_back.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("layouts/main.fxml"));
+        root = FXMLLoader.load(new URL("file:layouts/main.fxml"));
         stage.getScene().setRoot(root);
         System.out.println("Back btn press");
     }
@@ -58,7 +58,7 @@ public class MainController{
 
     public void showHighScore(MouseEvent mouseEvent) throws IOException {
         stage=(Stage) btn_highscore.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("layouts/highscore.fxml"));
+        root = FXMLLoader.load(new URL("file:layouts/highscore.fxml"));
         stage.getScene().setRoot(root);
         System.out.println("Highscore btn press");
     }
@@ -69,7 +69,7 @@ public class MainController{
 
     public void showOption(MouseEvent mouseEvent) throws IOException {
         stage=(Stage) btn_highscore.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("layouts/option.fxml"));
+        root = FXMLLoader.load(new URL("file:layouts/option.fxml"));
         stage.getScene().setRoot(root);
         System.out.println("Option btn press");
     }

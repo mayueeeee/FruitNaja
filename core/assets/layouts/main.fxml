@@ -4,36 +4,36 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" stylesheets="@../asset/main.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fruitnaja.desktop.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" stylesheets="@../main.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fruitnaja.desktop.MainController">
    <children>
       <ImageView blendMode="SRC_ATOP" fitHeight="808.0" fitWidth="1025.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../asset/background/BG.png" />
+            <Image url="@../background/BG.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="272.0" fitWidth="612.0" layoutX="176.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../asset/FruitNaja.png" />
+            <Image url="@../FruitNaja.png" />
          </image>
       </ImageView>
       <ImageView fx:id="btn_highscore" fitHeight="150.0" fitWidth="200.0" layoutX="289.0" layoutY="366.0" onMouseClicked="#showHighScore" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
          <image>
-            <Image url="@../asset/button/btScore.png" />
+            <Image url="@../button/btScore.png" />
          </image>
       </ImageView>
       <ImageView fx:id="btn_option" fitHeight="150.0" fitWidth="200.0" layoutX="530.0" layoutY="365.0" onMouseClicked="#showOption" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
          <image>
-            <Image url="@../asset/button/btOption.png" />
+            <Image url="@../button/btOption.png" />
          </image>
       </ImageView>
       <ImageView fx:id="btn_exit" fitHeight="150.0" fitWidth="200.0" layoutX="761.0" layoutY="363.0" onMouseClicked="#exitGame" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
          <image>
-            <Image url="@../asset/button/btExit.png" />
+            <Image url="@../button/btExit.png" />
          </image>
       </ImageView>
       <ImageView fx:id="btn_start" fitHeight="92.0" fitWidth="205.0" layoutX="54.0" layoutY="364.0" onMouseClicked="#runGDX" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
          <image>
-            <Image url="@../asset/button/btStart.png" />
+            <Image url="@../button/btPlay.png" />
          </image>
       </ImageView>
    </children>
