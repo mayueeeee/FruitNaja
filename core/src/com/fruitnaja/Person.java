@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 /**
  * Created by user on 9/4/2560.
@@ -16,7 +15,7 @@ public abstract class Person implements Attackable {
     private int stamina;
     private Vector2 pos;
     private  boolean live;
-    private static int idS;
+    private static int idS = 0;
     private int id;
     ArrayList<Item> checkitem = new ArrayList<Item>();
 
@@ -76,20 +75,21 @@ public abstract class Person implements Attackable {
         this.id = id;
     }
 
-    public Person(String name, int hp, int stamina, Vector pos, int id){
-
-    }
-
-    public Person() {
+    public Person(String name, int hp, int stamina, boolean live, int id) {
         this.name = name;
         this.hp = hp;
         this.stamina = stamina;
-        this.pos = pos;
-        this.live = live;
+        this.pos.add(0,0);
+        this.live = true;
         this.id = id;
+        this.idS += 1;
     }
 
-    public void moveX(){
+    public Person() {
+
+    }
+
+    public void move(){
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)||Gdx.input.isKeyPressed(Input.Keys.A)){
             pos.x-=100*Gdx.graphics.getDeltaTime();
         }

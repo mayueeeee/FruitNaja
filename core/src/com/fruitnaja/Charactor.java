@@ -21,8 +21,8 @@ public class Charactor extends Person {
 
     }
 
-    public Charactor(String name, int hp, int stamina, Vector pos, int id, int skill) {
-        super(name, hp, stamina, pos, id);
+    public Charactor(String name, int hp, int stamina,  int id, int skill) {
+        super(name, hp, stamina, id);
         this.skill = skill;
     }
 
