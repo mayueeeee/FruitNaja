@@ -114,3 +114,4 @@ gradle-app.setting
 Thumbs.db
 
 /out/
+*.mp3
