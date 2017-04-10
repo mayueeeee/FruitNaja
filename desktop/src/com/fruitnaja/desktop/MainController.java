@@ -77,4 +77,16 @@ public class MainController{
     public void playMao(MouseEvent mouseEvent) {
         Music.play(2);
     }
+
+    public void playNormal(MouseEvent mouseEvent) {
+        Music.play(2);
+    }
+
+    public void playEDM(MouseEvent mouseEvent) {
+        Music.play(1);
+    }
+
+    public void stopMusic(MouseEvent mouseEvent) {
+        Music.stop();
+    }
 }
