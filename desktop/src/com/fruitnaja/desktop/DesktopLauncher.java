@@ -7,11 +7,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.net.URL;
+
 public class DesktopLauncher extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception{
-
-		Parent root = FXMLLoader.load(getClass().getResource("layouts/main.fxml"));
+		File file = new File("layouts/main.fxml");
+		System.out.println(file.getAbsolutePath());
+		System.out.println(file.exists());
+		Parent root = FXMLLoader.load(new URL("file:layouts/main.fxml"));
 		primaryStage.setTitle("FruitNaJa");
 		primaryStage.setScene(new Scene(root, Configure.WIDTH, Configure.HEIGH));
 		//primaryStage.setResizable(false);
@@ -19,6 +24,7 @@ public class DesktopLauncher extends Application {
 		//System.out.println(Inet4Address.getLocalHost().getHostAddress());
 		Thread music = new Thread(){
 			public void run(){
+
 				Music.play();
 				System.out.println("Music Thread");
 			}

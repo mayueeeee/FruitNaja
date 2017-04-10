@@ -75,7 +75,7 @@ public abstract class Person implements Attackable {
         this.id = id;
     }
 
-    public Person(String name, int hp, int stamina, boolean live, int id) {
+    public Person() {
         this.name = name;
         this.hp = hp;
         this.stamina = stamina;
@@ -85,7 +85,7 @@ public abstract class Person implements Attackable {
         this.idS += 1;
     }
 
-    public Person() {
+    public Person(String name, int hp, int stamina, int id) {
 
     }
 
