@@ -1,7 +1,5 @@
 package com.fruitnaja;
 
-import java.util.Vector;
-
 /**
  * Created by user on 10/4/2560.
  */
@@ -17,7 +15,7 @@ public class Charactor extends Person {
     }
 
     public Charactor() {
-        super();
+
 
     }
 

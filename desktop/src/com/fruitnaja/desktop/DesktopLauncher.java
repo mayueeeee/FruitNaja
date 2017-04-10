@@ -1,13 +1,14 @@
 package com.fruitnaja.desktop;
 
-import com.fruitnaja.*;
+import com.fruitnaja.Configure;
+import com.fruitnaja.Music;
+import com.fruitnaja.SocketServer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.net.URL;
 
 public class DesktopLauncher extends Application {

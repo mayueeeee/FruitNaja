@@ -75,17 +75,17 @@ public abstract class Person implements Attackable {
         this.id = id;
     }
 
-    public Person() {
+    public Person(String name, int hp, int stamina, int id) {
         this.name = name;
         this.hp = hp;
         this.stamina = stamina;
-        this.pos.add(0,0);
+        this.pos = new Vector2(0,0);
         this.live = true;
         this.id = id;
         this.idS += 1;
     }
 
-    public Person(String name, int hp, int stamina, int id) {
+    public Person() {
 
     }
 
