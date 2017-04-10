@@ -1,27 +1,40 @@
 package com.fruitnaja;
 
 import java.io.DataInputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Inet4Address;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * Created by nutno on 6/4/2560.
  */
 public class SocketServer {
+    private final int PORT = 1025;
+    private int connected_client;
+    private ArrayList<Socket> socket = new ArrayList();
+
 
     public SocketServer()  {
-        //Start socket server
-        Thread network = new Thread(){
-            public void run(){
-                //System.out.println("Thread Running");
-                final int PORT = 1025;
-                try {
-                    System.out.println("Socket server is running at "+ Inet4Address.getLocalHost().getHostAddress()+":"+PORT);
+        try{
+            ServerSocket listener = new ServerSocket(PORT);
+        }
+        catch (IOException e){
+            System.out.println("Can't created new server");
+        }
+
+
+
+
+
+               /* try {
                     ServerSocket listener = new ServerSocket(PORT);
+                    System.out.println("Socket server is running at "+ Inet4Address.getLocalHost().getHostAddress()+":"+PORT);
+
                     //listener.accept();
                     Socket socket = listener.accept();
 
@@ -58,12 +71,23 @@ public class SocketServer {
                 }
                 catch (Exception e){
                     System.out.println("Socket server can't start");
-                }
+                } */
+
+
+
+    }
+
+    public void start(){
+        while (true){
+            try {
+
             }
-        };
-        network.start();
+            catch (Exception e){
+                System.out.println("Socket server can't start");
+            }
 
 
+        }
 
     }
 }
