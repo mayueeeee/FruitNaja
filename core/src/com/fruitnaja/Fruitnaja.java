@@ -84,7 +84,8 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		batch.draw(imgB,0,0);
 		batch.draw(img, heal.getPos().x,heal.getPos().y );
 		batch.end();
-		System.out.println(heal.getHp());
+//		System.out.println(heal.getHp());
+//		System.out.println(heal.getStamina());
 		heal.move();
 		heal.useSkill();
 

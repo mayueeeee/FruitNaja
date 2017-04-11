@@ -28,11 +28,26 @@ public class Charactor extends Person {
     }
 
     public void useSkill(){
-        if(Gdx.input.isKeyPressed(Input.Keys.Q)){
+        if(Gdx.input.isKeyPressed(Input.Keys.Q)&&getStamina()>0){
             if (skill == 1&&getHp()<200){
                 setHp(getHp()+50);
+                setStamina(getStamina()-25);
             }
-
+            if (skill == 2){
+                setStamina(getStamina()-25);
+            }
+            if (skill == 3){
+                setStamina(getStamina()-25);
+            }
+            if (skill == 4){
+                setStamina(getStamina()-25);
+            }
+            if (skill == 5){
+                setStamina(getStamina()-25);
+            }
+            if (skill == 6){
+                skill = ((int)(Math.random()*5))+1;
+            }
         }
 
     }
