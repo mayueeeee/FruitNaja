@@ -72,8 +72,11 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 				camera.position.y += camSpeed/2 * deltatime;
 			}
 		}
+		if (Gdx.input.isKeyPressed(Input.Keys.G)){
+			heal.setHp(heal.getHp()-50);
+		}
 		camera.update();
-		System.out.println(camera.position.y);
+//		System.out.println(camera.position.y);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 //		System.out.println(heal.getPos().y);
 		batch.setProjectionMatrix(camera.combined);
@@ -81,7 +84,9 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		batch.draw(imgB,0,0);
 		batch.draw(img, heal.getPos().x,heal.getPos().y );
 		batch.end();
+		System.out.println(heal.getHp());
 		heal.move();
+		heal.useSkill();
 
 
 

@@ -1,5 +1,8 @@
 package com.fruitnaja;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+
 /**
  * Created by user on 10/4/2560.
  */
@@ -25,19 +28,12 @@ public class Charactor extends Person {
     }
 
     public void useSkill(){
-        switch (this.skill){
-            case 1:
-                System.out.println("Healing");
-            case 2:
-                System.out.println("Shield");
-            case 3:
-                System.out.println("Stun");
-            case 4:
-                System.out.println("Poison");
-            case 5:
-                System.out.println("Speed");
-            case 6:
-                System.out.println("Ramdom");
+        if(Gdx.input.isKeyPressed(Input.Keys.Q)){
+            if (skill == 1&&getHp()<200){
+                setHp(getHp()+50);
+            }
+
         }
+
     }
 }
