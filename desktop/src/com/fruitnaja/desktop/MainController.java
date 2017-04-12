@@ -10,8 +10,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
@@ -28,11 +31,17 @@ public class MainController{
     @FXML
     private Button backBtn;
     @FXML
-    private ImageView btn_start,btn_back,btn_highscore;
+    private ImageView btn_start,btn_back,btn_highscore,btn_skill;
+    @FXML
     private Stage stage;
     private Parent root;
-    @FXML
     private Label txt_ip = new Label();
+
+    //Object in Charactor select
+    @FXML
+    private ImageView player1_preview,player2_preview;
+    @FXML
+    private Text player1_release,player2_release;
 
     @FXML
     public void initialize() throws Exception{
@@ -88,5 +97,58 @@ public class MainController{
 
     public void stopMusic(MouseEvent mouseEvent) {
         Music.stop();
+    }
+
+    public void showSelectSkill(int player,String skill) throws IOException{
+        Image x = new Image(new URL("file:skill/shield/skill1_0006_RStand.png").toString());
+        //System.out.println(new URL("file:skill/shield/skill1_0006_RStand.png").toString());
+        if (player==1){
+            player1_release.setVisible(true);
+        }
+        else if (player==2){
+            player2_release.setVisible(true);
+        }
+        else {
+
+        }
+
+
+        if (skill.equals("skill_heal")){
+            player1_preview.setImage(x);
+            System.out.println("mui");
+        }
+    }
+
+    public int selectSkill(MouseEvent mouseEvent){
+        //Grayscale Effect for disable skill
+        ColorAdjust grayscale = new ColorAdjust();
+        grayscale.setSaturation(-1);
+        grayscale.setBrightness(-0.2);
+        //Get node name
+        String skill = mouseEvent.getPickResult().getIntersectedNode().getId();
+        //Apply effect to node
+        mouseEvent.getPickResult().getIntersectedNode().setEffect(grayscale);
+        mouseEvent.getPickResult().getIntersectedNode().setDisable(true);
+        try {
+            showSelectSkill(1,skill);
+            System.out.println("MUI");
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+
+
+        System.out.println(skill);
+
+        //System.out.println("xxxxx");
+        return 1;
+    }
+
+    public void showSkill(MouseEvent mouseEvent) throws IOException {
+        stage=(Stage) btn_skill.getScene().getWindow();
+        root = FXMLLoader.load(new URL("file:layouts/character-select.fxml"));
+        stage.getScene().setRoot(root);
+        System.out.println("Skill btn press");
     }
 }

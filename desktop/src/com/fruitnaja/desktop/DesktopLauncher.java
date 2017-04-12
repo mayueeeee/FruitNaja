@@ -25,7 +25,7 @@ public class DesktopLauncher extends Application {
 		//System.out.println(Inet4Address.getLocalHost().getHostAddress());
 		Thread music = new Thread(){
 			public void run(){
-				Music.play();
+				//Music.play();
 				System.out.println("Music Thread");
 			}
 		};

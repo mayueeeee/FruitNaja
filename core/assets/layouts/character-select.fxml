@@ -18,44 +18,44 @@
             <Image url="@../button/btBack.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="skill_heal" fitHeight="101.0" fitWidth="85.0" layoutX="332.0" layoutY="198.0" onMouseClicked="#checkSkill" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
+      <ImageView fx:id="skill_heal" fitHeight="101.0" fitWidth="85.0" layoutX="332.0" layoutY="198.0" onMouseClicked="#selectSkill" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
          <image>
-            <Image url="@../charactor/ChHealing.png" />
+            <Image url="@../skill_thumbs/heal.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="skill_shield" fitHeight="101.0" fitWidth="85.0" layoutX="463.0" layoutY="199.0" onMouseClicked="#checkSkill" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
+      <ImageView fx:id="skill_shield" fitHeight="101.0" fitWidth="85.0" layoutX="463.0" layoutY="199.0" onMouseClicked="#selectSkill" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
          <image>
-            <Image url="@../charactor/ChShield.png" />
+            <Image url="@../skill_thumbs/shield.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="skill_stun" fitHeight="101.0" fitWidth="85.0" layoutX="593.0" layoutY="199.0" onMouseClicked="#checkSkill" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
+      <ImageView fx:id="skill_poison" fitHeight="101.0" fitWidth="85.0" layoutX="593.0" layoutY="199.0" onMouseClicked="#selectSkill" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
          <image>
-            <Image url="@../charactor/ChStun.png" />
+            <Image url="@../skill_thumbs/poison.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="101.0" fitWidth="85.0" layoutX="332.0" layoutY="319.0" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
+      <ImageView fx:id="skill_stun" fitHeight="101.0" fitWidth="85.0" layoutX="332.0" layoutY="319.0" onMouseClicked="#selectSkill" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
          <image>
-            <Image url="@../charactor/ChHealing.png" />
+            <Image url="@../skill_thumbs/stun.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="101.0" fitWidth="85.0" layoutX="463.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
+      <ImageView fx:id="skill_trap" fitHeight="101.0" fitWidth="85.0" layoutX="463.0" layoutY="320.0" onMouseClicked="#selectSkill" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
          <image>
-            <Image url="@../charactor/ChShield.png" />
+            <Image url="@../skill_thumbs/trap.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="101.0" fitWidth="85.0" layoutX="593.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
+      <ImageView fx:id="skill_random" fitHeight="101.0" fitWidth="85.0" layoutX="593.0" layoutY="320.0" onMouseClicked="#selectSkill" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
          <image>
-            <Image url="@../charactor/ChStun.png" />
+            <Image url="@../skill_thumbs/random.png" />
          </image>
       </ImageView>
       <ImageView fx:id="player1_preview" fitHeight="164.0" fitWidth="129.0" layoutX="127.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="player2_preview" fitHeight="164.0" fitWidth="129.0" layoutX="752.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true" />
-      <Text fx:id="palyer1_release" fill="#0b724a" layoutX="133.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click to release">
+      <Text fx:id="player1_release" fill="#0b724a" layoutX="133.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click to release" visible="false">
          <font>
             <Font name="Cloud-Light" size="17.0" />
          </font>
       </Text>
-      <Text fx:id="player2_release" fill="#0b724a" layoutX="758.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click to release">
+      <Text fx:id="player2_release" fill="#0b724a" layoutX="758.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click to release" visible="false">
          <font>
             <Font name="Cloud-Light" size="17.0" />
          </font>
