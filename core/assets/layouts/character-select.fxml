@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" stylesheets="@../main.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fruitnaja.desktop.MainController">
+   <children>
+      <ImageView blendMode="SRC_ATOP" fitHeight="808.0" fitWidth="1025.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../background/BGCharacter2.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="btn_back" fitHeight="150.0" fitWidth="200.0" layoutX="405.0" layoutY="451.0" onMouseClicked="#backToMain" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
+         <image>
+            <Image url="@../button/btBack.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="skill_heal" fitHeight="101.0" fitWidth="85.0" layoutX="332.0" layoutY="198.0" onMouseClicked="#checkSkill" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
+         <image>
+            <Image url="@../charactor/ChHealing.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="skill_shield" fitHeight="101.0" fitWidth="85.0" layoutX="463.0" layoutY="199.0" onMouseClicked="#checkSkill" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
+         <image>
+            <Image url="@../charactor/ChShield.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="skill_stun" fitHeight="101.0" fitWidth="85.0" layoutX="593.0" layoutY="199.0" onMouseClicked="#checkSkill" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
+         <image>
+            <Image url="@../charactor/ChStun.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="101.0" fitWidth="85.0" layoutX="332.0" layoutY="319.0" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
+         <image>
+            <Image url="@../charactor/ChHealing.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="101.0" fitWidth="85.0" layoutX="463.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
+         <image>
+            <Image url="@../charactor/ChShield.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="101.0" fitWidth="85.0" layoutX="593.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
+         <image>
+            <Image url="@../charactor/ChStun.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="player1_preview" fitHeight="164.0" fitWidth="129.0" layoutX="127.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="player2_preview" fitHeight="164.0" fitWidth="129.0" layoutX="752.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true" />
+      <Text fx:id="palyer1_release" fill="#0b724a" layoutX="133.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click to release">
+         <font>
+            <Font name="Cloud-Light" size="17.0" />
+         </font>
+      </Text>
+      <Text fx:id="player2_release" fill="#0b724a" layoutX="758.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click to release">
+         <font>
+            <Font name="Cloud-Light" size="17.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
