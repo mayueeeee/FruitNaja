@@ -10,7 +10,7 @@
    <children>
       <ImageView blendMode="SRC_ATOP" fitHeight="808.0" fitWidth="1025.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../background/BGCharacter2.png" />
+            <Image url="@../background/BGChar2.png" />
          </image>
       </ImageView>
       <ImageView fx:id="btn_back" fitHeight="150.0" fitWidth="200.0" layoutX="405.0" layoutY="451.0" onMouseClicked="#backToMain" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
@@ -48,14 +48,14 @@
             <Image url="@../skill_thumbs/random.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="player1_preview" fitHeight="164.0" fitWidth="129.0" layoutX="127.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="player2_preview" fitHeight="164.0" fitWidth="129.0" layoutX="752.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true" />
-      <Text fx:id="player1_release" fill="#0b724a" layoutX="133.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click to release" visible="false">
+      <ImageView fx:id="player1_preview" fitHeight="164.0" fitWidth="129.0" layoutX="140.0" layoutY="217.0" onMouseClicked="#releaseSkill" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="player2_preview" fitHeight="164.0" fitWidth="129.0" layoutX="762.0" layoutY="216.0" onMouseClicked="#releaseSkill" pickOnBounds="true" preserveRatio="true" />
+      <Text fx:id="player1_release" fill="#0b724a" layoutX="146.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click to release" visible="false">
          <font>
             <Font name="Cloud-Light" size="17.0" />
          </font>
       </Text>
-      <Text fx:id="player2_release" fill="#0b724a" layoutX="758.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click to release" visible="false">
+      <Text fx:id="player2_release" fill="#0b724a" layoutX="768.0" layoutY="424.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click to release" visible="false">
          <font>
             <Font name="Cloud-Light" size="17.0" />
          </font>
