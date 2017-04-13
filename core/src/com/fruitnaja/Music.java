@@ -12,7 +12,7 @@ public class Music {
     private static MediaPlayer mediaPlayer;
 
     public static void play(){
-        int list_no = (int)(Math.random()*2)+1;
+        int list_no = (int)(Math.random()*2+1);
         System.out.println(list_no);
         play(list_no);
     }
