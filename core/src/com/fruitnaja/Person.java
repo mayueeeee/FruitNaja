@@ -44,6 +44,10 @@ public abstract class Person implements Attackable {
         this.pos = pos;
     }
 
+    public boolean isLive() {
+        return live;
+    }
+
     public static int getIdS() {
         return idS;
     }
