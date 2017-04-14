@@ -15,7 +15,10 @@ public abstract class Person implements Attackable {
     private int stamina;
     private Vector2 pos;
     private  boolean live;
-    ArrayList<Item> checkitem = new ArrayList<Item>();
+    private static int idS = 0;
+    private int id;
+    ArrayList<Fruit> checkFruit = new ArrayList<Fruit>();
+    ArrayList<Weapon> checkWeapon = new ArrayList<Weapon>();
 
     public int getHp() {
         return hp;
@@ -23,14 +26,6 @@ public abstract class Person implements Attackable {
 
     public void setHp(int hp) {
         this.hp = hp;
-    }
-
-    public Vector2 getPos() {
-        return pos;
-    }
-
-    public void setPos(Vector2 pos) {
-        this.pos = pos;
     }
 
     public int getStamina() {
@@ -41,12 +36,30 @@ public abstract class Person implements Attackable {
         this.stamina = stamina;
     }
 
+    public Vector2 getPos() {
+        return pos;
+    }
+
+    public void setPos(Vector2 pos) {
+        this.pos = pos;
+    }
+
+    public static int getIdS() {
+        return idS;
+    }
+
+    public static void setIdS(int idS) {
+        Person.idS = idS;
+    }
+
     public Person(int hp, int stamina) {
         //this.name = name;
         this.hp = hp;
         this.stamina = stamina;
         this.pos = new Vector2(512/2,300/2);
         this.live = true;
+        this.id = id;
+        this.idS += 1;
     }
 
 
