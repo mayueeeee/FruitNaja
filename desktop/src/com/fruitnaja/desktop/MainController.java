@@ -2,7 +2,7 @@ package com.fruitnaja.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.fruitnaja.Configure;
+import com.fruitnaja.Game;
 import com.fruitnaja.Fruitnaja;
 import com.fruitnaja.Music;
 import javafx.fxml.FXML;
@@ -10,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -31,7 +30,7 @@ public class MainController{
     @FXML
     private Button backBtn;
     @FXML
-    private ImageView btn_start,btn_back,btn_highscore,btn_skill;
+    private ImageView btn_start,btn_back,btn_highscore,btn_play;
     @FXML
     private Stage stage;
     @FXML
@@ -44,7 +43,6 @@ public class MainController{
     private Text player1_release,player2_release;
     @FXML
     private ImageView skill_heal,skill_poison,skill_shield,skill_stun,skill_trap,skill_random;
-    private int click_count=0;
     private String[] select_skill = new String[2];
 
 
@@ -63,8 +61,8 @@ public class MainController{
         System.out.println("Play btn press");
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.forceExit = false;
-        config.width = Configure.WIDTH;
-        config.height = Configure.HEIGH;
+        config.width = Game.WIDTH;
+        config.height = Game.HEIGH;
         new LwjglApplication(new Fruitnaja(), config);
     }
 
@@ -91,7 +89,7 @@ public class MainController{
 
     //Main page -- Play Button
     public void showSkill(MouseEvent mouseEvent) throws IOException {
-        stage=(Stage) btn_skill.getScene().getWindow();
+        stage=(Stage) btn_play.getScene().getWindow();
         root = FXMLLoader.load(new URL("file:layouts/character-select.fxml"));
         stage.getScene().setRoot(root);
         System.out.println("Skill btn press");
@@ -113,17 +111,33 @@ public class MainController{
     }
 
     /* Methods for select skills page */
-    public String randomSkill(){
-        int skill = (int)(Math.random()*5+1);
-        switch (skill){
-            case 1: return "skill_heal";
-            case 2: return "skill_shield";
-            case 3: return "skill_poison";
-            case 4: return "skill_stun";
-            case 5: return "skill_trap";
-            default: return "ERROR!";
-        }
-    }
+
+//    public String randomSkill(){
+//        int skill = (int)(Math.random()*5+1);
+//        switch (skill){
+//            case 1: return "skill_heal";
+//            case 2: return "skill_shield";
+//            case 3: return "skill_poison";
+//            case 4: return "skill_stun";
+//            case 5: return "skill_trap";
+//            default: return "ERROR!";
+//        }
+//    }
+//
+//    public void showSelectSkill() throws IOException{
+//        String random;
+//        for (int i = 1; i <= 2; i++) {
+//            random = randomSkill();
+//            if (i==2){
+//                while (select_skill[0].equals(random)){
+//                    random = randomSkill();
+//                }
+//            }
+//            select_skill[i-1] = random;
+//            showSelectSkill(i,select_skill[i-1]);
+//        }
+//        disableSkill();
+//    }
 
     public void disableSkill(){
         disableSkill(skill_heal);
@@ -145,26 +159,6 @@ public class MainController{
         //System.out.println("Node: "+node.getId());
     }
 
-    public void showSelectSkill() throws IOException{
-        String random;
-        for (int i = 1; i <= 2; i++) {
-            random = randomSkill();
-            if (i==2){
-                while (select_skill[0].equals(random)){
-                    random = randomSkill();
-                }
-            }
-            select_skill[i-1] = random;
-            showSelectSkill(i,select_skill[i-1]);
-        }
-        disableSkill();
-
-//        for (String x:select_skill) {
-//            System.out.println(x);
-//
-//        }
-    }
-
     public void showSelectSkill(int player,String skill) throws IOException{
         skill = skill.substring(6);
         Image file = new Image(new URL("file:skill/"+skill+"/default.png").toString());
@@ -178,49 +172,156 @@ public class MainController{
         }
     }
 
+    public void enableSkill(Node img){
+        img.setEffect(null);
+        img.setDisable(false);
+    }
+
+    public void enableSkill(int player,boolean isInvert){
+        if(isInvert==false){
+            if(select_skill[player-1].equals("skill_heal")){
+                enableSkill(skill_heal);
+            }
+            else if(select_skill[player-1].equals("skill_trap")){
+                enableSkill(skill_trap);
+            }
+            else if(select_skill[player-1].equals("skill_shield")){
+                enableSkill(skill_shield);
+            }
+            else if(select_skill[player-1].equals("skill_stun")){
+                enableSkill(skill_stun);
+            }
+            else if(select_skill[player-1].equals("skill_random")){
+                enableSkill(skill_random);
+            }
+            else if(select_skill[player-1].equals("skill_poison")){
+                enableSkill(skill_poison);
+            }
+        }
+        else {
+            if(player==2&select_skill[0]!=null){
+                player=0;
+            }
+            else{
+                player=1;
+            }
+            if(select_skill[player].equals("skill_heal")){
+                //enableSkill(skill_heal);
+                enableSkill(skill_trap);
+                enableSkill(skill_shield);
+                enableSkill(skill_stun);
+                enableSkill(skill_random);
+                enableSkill(skill_poison);
+            }
+            else if(select_skill[player].equals("skill_trap")){
+                enableSkill(skill_heal);
+                //enableSkill(skill_trap);
+                enableSkill(skill_shield);
+                enableSkill(skill_stun);
+                enableSkill(skill_random);
+                enableSkill(skill_poison);
+            }
+            else if(select_skill[player].equals("skill_shield")){
+                enableSkill(skill_heal);
+                enableSkill(skill_trap);
+                //enableSkill(skill_shield);
+                enableSkill(skill_stun);
+                enableSkill(skill_random);
+                enableSkill(skill_poison);
+            }
+            else if(select_skill[player].equals("skill_stun")){
+                enableSkill(skill_heal);
+                enableSkill(skill_trap);
+                enableSkill(skill_shield);
+                //enableSkill(skill_stun);
+                enableSkill(skill_random);
+                enableSkill(skill_poison);
+            }
+            else if(select_skill[player].equals("skill_random")){
+                enableSkill(skill_heal);
+                enableSkill(skill_trap);
+                enableSkill(skill_shield);
+                enableSkill(skill_stun);
+                //enableSkill(skill_random);
+                enableSkill(skill_poison);
+            }
+            else if(select_skill[player].equals("skill_poison")){
+                enableSkill(skill_heal);
+                enableSkill(skill_trap);
+                enableSkill(skill_shield);
+                enableSkill(skill_stun);
+                enableSkill(skill_random);
+                //enableSkill(skill_poison);
+            }
+        }
+
+    }
+
     public void selectSkill(MouseEvent mouseEvent){
         //Get node name
         String skill = mouseEvent.getPickResult().getIntersectedNode().getId();
         //Apply effect to node
         disableSkill(mouseEvent.getPickResult().getIntersectedNode());
+        int select=0;
+        for (int i = 0; i < select_skill.length; i++) {
+            if(select_skill[i]==null){
+                select=i;
+                break;
+            }
+        }
         try {
-            if (skill.equals("skill_random")){
-                showSelectSkill();
-                System.out.println("Rand");
+            select_skill[select]= skill;
+            showSelectSkill(select+1,skill);
+            if (select_skill[1]!=null){
+                disableSkill();
             }
-            else {
-                click_count++;
-                showSelectSkill(click_count,skill);
-                if(click_count==2){
-                    disableSkill();
-                }
-            }
-
         }
         catch (IOException e){
-            e.printStackTrace();
+
         }
 
 
 
-        System.out.println(skill);
+        //System.out.println(skill);
+        debugSelect();
 
 
+    }
+
+    public void debugSelect(){
+        for (String x:select_skill) {
+            System.out.println("DEB: "+x);
+        }
+        System.out.println("--------------");
     }
 
     public void releaseSkill(MouseEvent mouseEvent){
         String player = mouseEvent.getPickResult().getIntersectedNode().getId().substring(6,7);
         int player_id = Integer.parseInt(player);
-        if(player_id==1){
-            player1_release.setVisible(false);
-            player1_preview.setImage(null);
+        debugSelect();
+        if (select_skill[1]!=null){
+            enableSkill(player_id,true);
         }
-        else {
-            player2_release.setVisible(false);
-            player2_preview.setImage(null);
+
+        try {
+
+            if(player_id==1){
+                player1_release.setVisible(false);
+                player1_preview.setImage(null);
+                enableSkill(1,false);
+                select_skill[0] = null;
+            }
+            else {
+                player2_release.setVisible(false);
+                player2_preview.setImage(null);
+                enableSkill(2,false);
+                select_skill[1] = null;
+            }
+            debugSelect();
         }
-        click_count--;
-        System.out.println("Release "+player);
+        catch (NullPointerException e){
+            System.out.println("NULL!!!!!");
+        }
     }
 
     public void createPlayer(){
