@@ -10,22 +10,12 @@ import java.util.ArrayList;
  * Created by user on 9/4/2560.
  */
 public abstract class Person implements Attackable {
-    private String name;
+    //private String name;
     private int hp;
     private int stamina;
     private Vector2 pos;
     private  boolean live;
-    private static int idS = 0;
-    private int id;
     ArrayList<Item> checkitem = new ArrayList<Item>();
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public int getHp() {
         return hp;
@@ -33,14 +23,6 @@ public abstract class Person implements Attackable {
 
     public void setHp(int hp) {
         this.hp = hp;
-    }
-
-    public int getStamina() {
-        return stamina;
-    }
-
-    public void setStamina(int stamina) {
-        this.stamina = stamina;
     }
 
     public Vector2 getPos() {
@@ -51,43 +33,23 @@ public abstract class Person implements Attackable {
         this.pos = pos;
     }
 
-    public static int getIdS() {
-        return idS;
+    public int getStamina() {
+        return stamina;
     }
 
-    public static void setIdS(int idS) {
-        Person.idS = idS;
+    public void setStamina(int stamina) {
+        this.stamina = stamina;
     }
 
-    public boolean isLive() {
-        return live;
-    }
-
-    public void setLive(boolean live) {
-        this.live = live;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Person(String name, int hp, int stamina, int id) {
-        this.name = name;
+    public Person(int hp, int stamina) {
+        //this.name = name;
         this.hp = hp;
         this.stamina = stamina;
         this.pos = new Vector2(512/2,300/2);
         this.live = true;
-        this.id = id;
-        this.idS += 1;
     }
 
-    public Person() {
 
-    }
 
     public void move(){
         if((Gdx.input.isKeyPressed(Input.Keys.LEFT)||Gdx.input.isKeyPressed(Input.Keys.A))&&pos.x>0){

@@ -17,13 +17,8 @@ public class Charactor extends Person {
         this.skill = skill;
     }
 
-    public Charactor() {
-
-
-    }
-
     public Charactor(String name, int hp, int stamina,  int id, int skill) {
-        super(name, hp, stamina, id);
+        super(hp, stamina);
         this.skill = skill;
     }
 
