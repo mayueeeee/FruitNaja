@@ -1,7 +1,6 @@
 package com.fruitnaja.desktop;
 
-import com.fruitnaja.Configure;
-import com.fruitnaja.Music;
+import com.fruitnaja.Game;
 import com.fruitnaja.SocketServer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +18,7 @@ public class DesktopLauncher extends Application {
 		//System.out.println(file.exists());
 		Parent root = FXMLLoader.load(new URL("file:layouts/main.fxml"));
 		primaryStage.setTitle("FruitNaJa");
-		primaryStage.setScene(new Scene(root, Configure.WIDTH, Configure.HEIGH));
+		primaryStage.setScene(new Scene(root, Game.WIDTH, Game.HEIGH));
 		//primaryStage.setResizable(false);
 		primaryStage.show();
 		//System.out.println(Inet4Address.getLocalHost().getHostAddress());
@@ -53,12 +52,12 @@ public class DesktopLauncher extends Application {
 		/*class LaunchGDX implements EventHandler<ActionEvent>{
 			@Override // Override the handle method
 			public void handle(ActionEvent e) {
-				Configure.loadConfigure();
+				Game.loadConfigure();
 				//System.out.println("xxx");
 				LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 				config.forceExit = false;
-				config.width = Configure.WIDTH;
-				config.height = Configure.HEIGH;
+				config.width = Game.WIDTH;
+				config.height = Game.HEIGH;
 				new LwjglApplication(new Fruitnaja(), config);
 			}
 		}*/
