@@ -17,7 +17,8 @@ public abstract class Person implements Attackable {
     private  boolean live;
     private static int idS = 0;
     private int id;
-    ArrayList<Item> checkitem = new ArrayList<Item>();
+    ArrayList<Fruit> checkFruit = new ArrayList<Fruit>();
+    ArrayList<Weapon> checkWeapon = new ArrayList<Weapon>();
 
     public String getName() {
         return name;
