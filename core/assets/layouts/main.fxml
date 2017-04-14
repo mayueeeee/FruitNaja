@@ -31,14 +31,9 @@
             <Image url="@../button/btExit.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="btn_start" fitHeight="92.0" fitWidth="205.0" layoutX="54.0" layoutY="364.0" onMouseClicked="#runGDX" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
+      <ImageView fx:id="btn_play" fitHeight="92.0" fitWidth="205.0" layoutX="54.0" layoutY="364.0" onMouseClicked="#showSkill" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
          <image>
             <Image url="@../button/btPlay.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="btn_skill" fitHeight="150.0" fitWidth="200.0" layoutX="513.0" layoutY="469.0" onMouseClicked="#showSkill" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
-         <image>
-            <Image url="@../button/btOption.png" />
          </image>
       </ImageView>
    </children>

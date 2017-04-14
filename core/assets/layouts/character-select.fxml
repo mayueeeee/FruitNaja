@@ -13,7 +13,7 @@
             <Image url="@../background/BGChar2.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="btn_back" fitHeight="150.0" fitWidth="200.0" layoutX="405.0" layoutY="451.0" onMouseClicked="#backToMain" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
+      <ImageView fx:id="btn_back" fitHeight="150.0" fitWidth="200.0" layoutX="306.0" layoutY="455.0" onMouseClicked="#backToMain" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
          <image>
             <Image url="@../button/btBack.png" />
          </image>
@@ -60,5 +60,10 @@
             <Font name="Cloud-Light" size="17.0" />
          </font>
       </Text>
+      <ImageView fx:id="btn_start" fitHeight="150.0" fitWidth="200.0" layoutX="528.0" layoutY="452.0" onMouseClicked="#runGDX" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
+         <image>
+            <Image url="@../button/btStart.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
