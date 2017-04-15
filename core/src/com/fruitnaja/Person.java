@@ -2,7 +2,10 @@ package com.fruitnaja;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.TimeUtils;
 
 import java.util.ArrayList;
 
@@ -17,6 +20,17 @@ public abstract class Person implements Attackable {
     private  boolean live;
     private static int idS = 0;
     private int id;
+    private long lastHitTimeS;
+
+    TextureRegion[] animationframeS = new TextureRegion[2];
+    Animation animationS;
+    TextureRegion[] animationframeW = new TextureRegion[2];
+    Animation animationW;
+    TextureRegion[] animationframeA = new TextureRegion[2];
+    Animation animationA;
+    TextureRegion[] animationframeD = new TextureRegion[2];
+    Animation animationD;
+
     ArrayList<Fruit> checkFruit = new ArrayList<Fruit>();
     ArrayList<Weapon> checkWeapon = new ArrayList<Weapon>();
 
@@ -91,7 +105,10 @@ public abstract class Person implements Attackable {
     }
 
     public void attack(){
-
+        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)&& TimeUtils.nanoTime()-lastHitTimeS>1000000000){
+            System.out.println("attack");
+            lastHitTimeS = TimeUtils.nanoTime();
+        }
     }
 
     public abstract void useSkill();

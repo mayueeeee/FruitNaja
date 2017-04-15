@@ -9,11 +9,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class Fruitnaja extends ApplicationAdapter implements ApplicationListener {
@@ -25,7 +23,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	private Texture grid3;
 	private Texture grid4;
 	private Texture grid5;
-	private Sprite bgSprite;
+	private Texture [] fruit = new Texture[7];
 	private long lastHitTime;
 	int x = 0,y = 0;
 	Person heal = new Charactor("U",200,100,0,1);
@@ -37,7 +35,6 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	public static Camera camera2;
 	private float camSpeed = 100f;
 	private double deltatime;
-	private Vector3 mouse_position = new Vector3(0, 0, 0);
 	private TextureRegion [][] healer;
 	private TextureRegion [][] stuner;
 	private TextureRegion [][] shielder;
@@ -45,29 +42,19 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	private TextureRegion [][] poisoner;
 
 
-	TextureRegion[] animationframeS = new TextureRegion[2];
-	Animation animationS;
-	TextureRegion[] animationframeW = new TextureRegion[2];
-	Animation animationW;
-	TextureRegion[] animationframeA = new TextureRegion[2];
-	Animation animationA;
-	TextureRegion[] animationframeD = new TextureRegion[2];
-	Animation animationD;
-
 
 	float etime;
 
 
+
 	@Override
 	public void create () {
-		camera1 = new OrthographicCamera(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight());
-		camera1.position.x = Gdx.graphics.getWidth() / 4;
-		camera1.position.y = Gdx.graphics.getHeight() / 2;
+		camera1 = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+		camera1.position.set(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight(),0);
 		camera1.update();
 
-		camera2 = new OrthographicCamera(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight());
-		camera2.position.x = Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 4);
-		camera2.position.y = Gdx.graphics.getHeight() / 2;
+		camera2 = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		camera2.position.set(Gdx.graphics.getWidth()+Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight(),0);
 		camera2.update();
 
 		batch = new SpriteBatch();
@@ -78,130 +65,142 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		grid3 = new Texture("sprite/Grid03.png");
 		grid4 = new Texture("sprite/Grid04.png");
 		grid5 = new Texture("sprite/Grid05.png");
+		for(int q = 0; q<7;q++){
+			int t =q+1;
+			fruit[q] = new Texture("fruits/"+t+".png");
+		}
 
 
 		healer = TextureRegion.split(grid1,127,182);
-		stuner = TextureRegion.split(grid1,127,182);
-		shielder = TextureRegion.split(grid1,127,182);
-		traper = TextureRegion.split(grid1,127,182);
-		poisoner = TextureRegion.split(grid1,127,182);
+		shielder = TextureRegion.split(grid2,127,182);
+		stuner = TextureRegion.split(grid3,127,182);
+		poisoner = TextureRegion.split(grid4,127,182);
+		traper = TextureRegion.split(grid5,127,182);
 
-		setAnimation(healer);
-		setAnimation(shielder);
-		setAnimation(stuner);
-		setAnimation(traper);
-		setAnimation(poisoner);
+
+		setAnimation(healer,heal);
+		setAnimation(shielder,shield);
+		setAnimation(stuner,stun);
+		setAnimation(traper,trap);
+		setAnimation(poisoner,poison);
+
+//		playerOneViewport.update(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
+//		playerTwoViewport.update(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
+//		playerTwoViewport.setScreenX(Gdx.graphics.getWidth() / 2);
 	}
 
-	public void setAnimation(TextureRegion [][] ani){
+	@Override
+	public void resize(int width, int height){
+
+	}
+
+	public void setAnimation(TextureRegion [][] ani,Person person){
 		int index = 0;
 		int i = 0;
 		//walk down
 		for (int j = 1 ;  j < 3 ;j++){
-			animationframeS[index++] = ani[i][j];
+			person.animationframeS[index++] = ani[i][j];
 		}
-		animationS = new Animation(1f/2f,animationframeS);
+		person.animationS = new Animation(1f/2f,person.animationframeS);
 
 		//walk up
 		index = 0;
 		i=1;
 		for (int j = 1 ;  j < 3 ;j++){
-			animationframeW[index++] = ani[i][j];
+			person.animationframeW[index++] = ani[i][j];
 		}
-		animationW = new Animation(1f/2f,animationframeW);
+		person.animationW = new Animation(1f/2f,person.animationframeW);
 
 		//walk Left
 		index = 0;
 		i=2;
 		for (int j = 1 ;  j >= 0 ;j--){
-			animationframeA[index++] = ani[i][j];
+			person.animationframeA[index++] = ani[i][j];
 		}
-		animationA = new Animation(1f/2f,animationframeA);
+		person.animationA = new Animation(1f/2f,person.animationframeA);
 
 		//walk Right
 		index = 0;
 		i=3;
 		for (int j = 0 ;  j < 2 ;j++){
-			animationframeD[index++] = ani[i][j];
+			person.animationframeD[index++] = ani[i][j];
 		}
-		animationD = new Animation(1f/2f,animationframeD);
+		person.animationD = new Animation(1f/2f,person.animationframeD);
 	}
 
-	public void setCamera(){
+	public void setCamera(Person person,TextureRegion [][] hero){
 		if (Gdx.input.isKeyPressed(Input.Keys.A)&&camera1.position.x>512) {
 
 			camera1.position.x -= camSpeed * deltatime;
-			batch.draw((TextureRegion) animationA.getKeyFrame(etime,true),camera1.position.x,camera1.position.y);
+			batch.draw((TextureRegion) person.animationA.getKeyFrame(etime,true),camera1.position.x,camera1.position.y);
 
 
 		}
 
 		else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-			if(heal.getPos().x>(Gdx.graphics.getWidth()/2)){
+			if(person.getPos().x>(Gdx.graphics.getWidth()/2)){
 				camera1.position.x += camSpeed * deltatime;
 			}
 			else {
 				camera1.position.x += camSpeed/2 * deltatime;
 			}
-			batch.draw((TextureRegion) animationD.getKeyFrame(etime,true),camera1.position.x,camera1.position.y);
+			batch.draw((TextureRegion) person.animationD.getKeyFrame(etime,true),camera1.position.x,camera1.position.y);
 		}
 
 		else if (Gdx.input.isKeyPressed(Input.Keys.S)&&camera1.position.y>300) {
 			camera1.position.y -= camSpeed * deltatime;
-			batch.draw((TextureRegion) animationS.getKeyFrame(etime,true),camera1.position.x,camera1.position.y);
+			batch.draw((TextureRegion) person.animationS.getKeyFrame(etime,true),camera1.position.x,camera1.position.y);
 		}
 
 		else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-			if(heal.getPos().y>(Gdx.graphics.getHeight()/2)){
+			if(person.getPos().y>(Gdx.graphics.getHeight()/2)){
 				camera1.position.y += camSpeed * deltatime;
 			}
 			else {
 				camera1.position.y += camSpeed/2 * deltatime;
 			}
-			batch.draw((TextureRegion) animationW.getKeyFrame(etime,true),camera1.position.x,camera1.position.y);
+			batch.draw((TextureRegion) person.animationW.getKeyFrame(etime,true),camera1.position.x,camera1.position.y);
 		}
 		else {
-			batch.draw(healer[0][0], heal.getPos().x,heal.getPos().y );
+			batch.draw(hero[0][0], person.getPos().x,person.getPos().y );
 		}
 	}
 
-	public void setCamera2(){
-		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)&&camera2.position.x>512) {
+	public void setCamera2(Person person,TextureRegion [][] hero){
+		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 
-			camera2.position.x -= camSpeed * deltatime;
-			batch.draw((TextureRegion) animationA.getKeyFrame(etime,true),camera2.position.x,camera2.position.y);
-
-
+		camera2.position.x -= camSpeed * deltatime;
+		batch.draw((TextureRegion) person.animationA.getKeyFrame(etime,true),camera2.position.x,camera2.position.y);
 		}
 
 		else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			if(heal.getPos().x>(Gdx.graphics.getWidth()/2)){
+			if(person.getPos().x>(Gdx.graphics.getWidth()/2)){
 				camera2.position.x += camSpeed * deltatime;
 			}
 			else {
 				camera2.position.x += camSpeed/2 * deltatime;
 			}
-			batch.draw((TextureRegion) animationD.getKeyFrame(etime,true),camera2.position.x,camera2.position.y);
+			batch.draw((TextureRegion) person.animationD.getKeyFrame(etime,true),camera2.position.x,camera2.position.y);
 		}
 
-		else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)&&camera1.position.y>300) {
+		else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
 			camera2.position.y -= camSpeed * deltatime;
-			batch.draw((TextureRegion) animationS.getKeyFrame(etime,true),camera2.position.x,camera2.position.y);
+			batch.draw((TextureRegion) person.animationS.getKeyFrame(etime,true),camera2.position.x,camera2.position.y);
 		}
 
 		else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-			if(heal.getPos().y>(Gdx.graphics.getHeight()/2)){
-				camera2.position.y += camSpeed * deltatime;
-			}
-			else {
-				camera2.position.y += camSpeed/2 * deltatime;
-			}
-			batch.draw((TextureRegion) animationW.getKeyFrame(etime,true),camera2.position.x,camera2.position.y);
+			if(person.getPos().y>(Gdx.graphics.getHeight()/2)){
+			camera2.position.y += camSpeed * deltatime;
 		}
 		else {
-			batch.draw(healer[0][0], heal.getPos().x,heal.getPos().y );
+			camera2.position.y += camSpeed/2 * deltatime;
 		}
+		batch.draw((TextureRegion) person.animationW.getKeyFrame(etime,true),camera2.position.x,camera2.position.y);
 	}
+		else {
+		batch.draw(hero[0][0], person.getPos().x,person.getPos().y );
+	}
+}
 
 
 	@Override
@@ -221,41 +220,49 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		}
 
 
-
 //		System.out.println(camera.position.y);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
+
+
 		/*Left Half*/
 		Gdx.gl.glViewport( 0,0,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight() );
-		//Set up camera with viewport in mind
 		camera1.update();
 		batch.setProjectionMatrix(camera1.combined);
 		batch.begin();
 		batch.draw(imgB,0,0);
-		setCamera();
-//		heal.setPos(new Vector2(camera2.position.x,camera2.position.y));
-		heal.setPos(new Vector2(camera1.position.x,camera1.position.y));
-//		heal.move();
-		heal.useSkill();
+		if((camera1.position.x>960&&camera1.position.x<1000)&&(camera1.position.y<1040&&camera1.position.y>995)||(camera2.position.x>960&&camera2.position.x<1000)&&(camera2.position.y<1040&&camera2.position.y>995)){
+			batch.enableBlending();
+		}
+		else {
+			batch.draw(fruit[0],1000,1000,80,80);
+		}
+		setCamera(trap,traper);
+		setCamera2(stun,stuner);
+		trap.setPos(new Vector2(camera1.position.x,camera1.position.y));
+		trap.useSkill();
+		trap.attack();
 		batch.end();
-		System.out.println(heal.getHp());
 
 
    		 /*Right Half*/
 		Gdx.gl.glViewport( Gdx.graphics.getWidth()/2,0,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight() );
-		//Set up camera again with other viewport in mind
 		camera2.update();
 		batch.setProjectionMatrix(camera2.combined);
 		batch.begin();
 		batch.draw(imgB,0,0);
-		setCamera2();
-		heal.setPos(new Vector2(camera2.position.x,camera2.position.y));
-//		heal.setPos(new Vector2(camera1.position.x,camera1.position.y));
-//		heal.move();
-		heal.useSkill();
+		if((camera1.position.x>960&&camera1.position.x<1000)&&(camera1.position.y<1040&&camera1.position.y>995)||(camera2.position.x>960&&camera2.position.x<1000)&&(camera2.position.y<1040&&camera2.position.y>995)){
+			batch.enableBlending();
+		}
+		else {
+			batch.draw(fruit[0],1000,1000,80,80);
+		}
+		stun.setPos(new Vector2(camera2.position.x,camera2.position.y));
+		setCamera(trap,traper);
+		setCamera2(stun,stuner);
 		batch.end();
-		System.out.println(heal.getHp());
+//
 //
 //
 // 		System.out.println(heal.getPos().y);
@@ -273,7 +280,6 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 
 
 	}
-
 
 
 //	@Override

@@ -11,6 +11,7 @@ public class Charactor extends Person {
     public int skill;
     private long lastHitTimeS;
 
+
     public int getSkill() {
         return skill;
     }
