@@ -61,7 +61,7 @@
             <Font name="Cloud-Light" size="17.0" />
          </font>
       </Text>
-      <ImageView fx:id="btn_start" disable="true" fitHeight="56.0" fitWidth="145.0" layoutX="514.0" layoutY="464.0" onMouseClicked="#runGDX" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
+      <ImageView fx:id="btn_start" disable="true" fitHeight="56.0" fitWidth="145.0" layoutX="514.0" layoutY="464.0" onMouseClicked="#showHowto" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
          <image>
             <Image url="@../button/btStart.png" />
          </image>
