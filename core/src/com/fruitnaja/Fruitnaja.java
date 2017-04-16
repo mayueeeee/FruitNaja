@@ -244,7 +244,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	}
 
 	public void setCamera2(TextureRegion [][] hero, Person person){
-		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)&&camera2.position.x>512) {
 			camera2.position.x -= camSpeed * deltatime;
 			batch.draw((TextureRegion) person.animationA.getKeyFrame(etime,true),camera2.position.x,camera2.position.y);
 			push2 = 1;
@@ -328,16 +328,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 				batch.draw(deco[y],bush[y][z].getPosDeco().x,bush[y][z].getPosDeco().y,131,90);
 			}
 		}
-
-		if((camera1.position.x>960&&camera1.position.x<1000)&&(camera1.position.y<1040&&camera1.position.y>995)||(camera2.position.x>960&&camera2.position.x<1000)&&(camera2.position.y<1040&&camera2.position.y>995)){
-			batch.enableBlending();
-		}
-		else {
-			for(int m =0;m<7;m++){
-				for(int n=0;n<20;n++) {
-					batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,70,70);
-				}
-		for(int m =0;m<7;m++){
+		for(int m=0;m<7;m++){
 			int n = 0;
 			checkFruit();
 			if (n == 0){
@@ -359,15 +350,14 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 
 		player1.setPos(new Vector2(camera1.position.x,camera1.position.y));
 		if (camera1.position.x<512||camera1.position.y<366){
-			trap.move();
-			batch.draw(traper[0][0],trap.getPos().x,trap.getPos().y);
+			player1.move();
 		}
 		else {
-			setCamera(trap,traper);
-			trap.setPos(new Vector2(camera1.position.x,camera1.position.y));
+			setCamera(traper,trap);
+			player1.setPos(new Vector2(camera1.position.x,camera1.position.y));
 		}
 
-		setCamera2(stun,stuner);
+		setCamera2(getSprite((Charactor) player2),player2);
 		System.out.println(camera1.position.x+" "+camera1.position.y);
 
 
