@@ -49,11 +49,11 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 
 	@Override
 	public void create () {
-		camera1 = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+		camera1 = new OrthographicCamera(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight());
 		camera1.position.set(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight(),0);
 		camera1.update();
 
-		camera2 = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		camera2 = new OrthographicCamera(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight());
 		camera2.position.set(Gdx.graphics.getWidth()+Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight(),0);
 		camera2.update();
 
@@ -84,9 +84,6 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		setAnimation(traper,trap);
 		setAnimation(poisoner,poison);
 
-//		playerOneViewport.update(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
-//		playerTwoViewport.update(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
-//		playerTwoViewport.setScreenX(Gdx.graphics.getWidth() / 2);
 	}
 
 	@Override
