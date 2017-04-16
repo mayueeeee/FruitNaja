@@ -44,6 +44,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	int push1 = 0;
 	int push2 = 0;
 	Decoration [][] bush = new Decoration[3][100];
+	Fruit[][] fruits = new Fruit[7][20];
 
 
 	float etime;
@@ -92,6 +93,17 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 			}
 		}
 
+		for(int n=0;n<20;n++) {
+			for(int m = 0;m<7;m++) {
+				fruits[m][n] = new Fruit();
+			}
+		}
+		for(int n=0;n<20;n++) {
+			for(int m = 0;m<7;m++) {
+				fruits[m][n].setPosFruit((float)(Math.random()*7000+100),(float)(Math.random()*4000+100));
+			}
+		}
+
 
 
 		setAnimation(healer,heal);
@@ -99,6 +111,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		setAnimation(stuner,stun);
 		setAnimation(traper,trap);
 		setAnimation(poisoner,poison);
+
 
 	}
 
@@ -285,11 +298,19 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 			batch.enableBlending();
 		}
 		else {
-			batch.draw(fruit[0],1000,1000,80,80);
+			for(int m =0;m<7;m++){
+				for(int n=0;n<20;n++) {
+
+						batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,100,100);
+
+				}
+
+			}
 		}
 		setCamera(trap,traper);
 		setCamera2(stun,stuner);
 		trap.setPos(new Vector2(camera1.position.x,camera1.position.y));
+
 		batch.end();
 
 
@@ -308,7 +329,11 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 			batch.enableBlending();
 		}
 		else {
-			batch.draw(fruit[0],1000,1000,80,80);
+			for(int m =0;m<7;m++){
+				for(int n=0;n<20;n++) {
+					batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,100,100);
+				}
+			}
 		}
 		stun.setPos(new Vector2(camera2.position.x,camera2.position.y));
 		setCamera(trap,traper);

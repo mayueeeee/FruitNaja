@@ -1,5 +1,8 @@
 package com.fruitnaja;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -36,6 +39,8 @@ public class Fruit implements Catchable {
         this.posFruit = posFruit;
     }
 
+
+
     public int getIdFruit() {
         return idFruit;
     }
@@ -57,11 +62,17 @@ public class Fruit implements Catchable {
         this.effect = effect;
         this.posFruit = new Vector2((float) (Math.random()*7067),(float) (Math.random()*4064));
         this.idFruit = idFruit;
-        this.pick = true;
+        this.pick = false;
     }
 
     public Fruit() {
+        this.pick = false;
+        this.posFruit = new Vector2(0,0);
+    }
 
+    public void setPosFruit(float x,float y) {
+        this.posFruit.x = x;
+        this.posFruit.y = y;
     }
 
     @Override
