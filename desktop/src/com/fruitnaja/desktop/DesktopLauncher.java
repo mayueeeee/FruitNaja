@@ -1,6 +1,7 @@
 package com.fruitnaja.desktop;
 
 import com.fruitnaja.Game;
+import com.fruitnaja.Music;
 import com.fruitnaja.SocketServer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +25,7 @@ public class DesktopLauncher extends Application {
 		//System.out.println(Inet4Address.getLocalHost().getHostAddress());
 		Thread music = new Thread(){
 			public void run(){
-				//Music.play();
+				Music.play();
 				System.out.println("Music Thread");
 			}
 		};
@@ -41,7 +42,7 @@ public class DesktopLauncher extends Application {
 
 
 
-		SocketServer server = new SocketServer();
+		//SocketServer server = new SocketServer();
 
 		//System.out.println("uuu");
 
