@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
 
 
@@ -39,6 +41,9 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	int push1 = 0, push2 = 0,push = 0 ;
 	Decoration [][] bush = new Decoration[3][100];
 	Fruit[][] fruits = new Fruit[7][20];
+	/** Rectangles for check collision **/
+	Rectangle [][] bush_rect = new Rectangle[3][100];
+	Rectangle [][] fruit_rect = new Rectangle[7][20];
 
 
 	float etime;
@@ -73,46 +78,42 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 			deco[q] = new Texture("Deco/b"+t+".png");
 		}
 		/** Load asset **/
-		healer = TextureRegion.split(grid2,127,182);
-		shielder = TextureRegion.split(grid1,127,182);
-		stuner = TextureRegion.split(grid3,127,182);
-		poisoner = TextureRegion.split(grid4,127,182);
-		traper = TextureRegion.split(grid5,127,182);
-		random = TextureRegion.split(grid6,127,182);
+		healer = TextureRegion.split(grid2,Game.CHAR_WIDTH,Game.CHAR_HEIGHT);
+		shielder = TextureRegion.split(grid1,Game.CHAR_WIDTH,Game.CHAR_HEIGHT);
+		stuner = TextureRegion.split(grid3,Game.CHAR_WIDTH,Game.CHAR_HEIGHT);
+		poisoner = TextureRegion.split(grid4,Game.CHAR_WIDTH,Game.CHAR_HEIGHT);
+		traper = TextureRegion.split(grid5,Game.CHAR_WIDTH,Game.CHAR_HEIGHT);
+		random = TextureRegion.split(grid6,Game.CHAR_WIDTH,Game.CHAR_HEIGHT);
+
+		/** Generate Decorations **/
 		for (int y = 0;y <100;y++){
 			for(int z = 0;z < 3;z++){
+				float rand_x = (float)(Math.random()*7000+100);
+				float rand_y = (float)(Math.random()*4000+100);
+				bush_rect[z][y] = new Rectangle(rand_x,rand_y,Game.DECOR_WIDTH,Game.DECOR_HEIGHT);
 				bush[z][y] = new Decoration();
-				bush[z][y].setPosDeco((float)(Math.random()*7000+100),(float)(Math.random()*4000+100));
+				bush[z][y].setPosDeco(rand_x,rand_y);
 			}
 		}
-		/*
-		for (int y = 0;y <100;y++){
-			for(int z = 0;z < 3;z++){
-				bush[z][y].setPosDeco((float)(Math.random()*7000+100),(float)(Math.random()*4000+100));
-			}
-		}*/
 
+		/** Generate Fruits **/
 		for(int n=0;n<20;n++) {
 			for(int m = 0;m<7;m++) {
+				float rand_x = (float)(Math.random()*7000+100);
+				float rand_y = (float)(Math.random()*4000+100);
+				fruit_rect[m][n] = new Rectangle(rand_x,rand_y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
 				fruits[m][n] = new Fruit();
 				fruits[m][n].setPosFruit((float)(Math.random()*7000+100),(float)(Math.random()*4000+100));
 			}
 		}
 
-		/* for(int n=0;n<20;n++) {
-			for(int m = 0;m<7;m++) {
-				fruits[m][n].setPosFruit((float)(Math.random()*7000+100),(float)(Math.random()*4000+100));
-			}
-		}*/
-
-
 		setAnimation(getSprite((Charactor) player1),player1);
 		setAnimation(getSprite((Charactor) player2),player2);
-
-		setAnimation(healer,heal);
+		/* setAnimation(healer,heal);
 		setAnimation(shielder,shield);
 		setAnimation(stuner,stun);
 		setAnimation(traper,trap);
+		setAnimation(poisoner,poison); */
 		setAnimation(poisoner,poison);
 
 		player1.setPosX(camera1.position.x);
@@ -332,14 +333,15 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 
 		for (int y = 0;y <3;y++){
 			for(int z = 0;z < 100;z++){
-				batch.draw(deco[y],bush[y][z].getPosDeco().x,bush[y][z].getPosDeco().y,131,90);
+				batch.draw(deco[y],bush[y][z].getPosDeco().x,bush[y][z].getPosDeco().y,Game.DECOR_WIDTH,Game.DECOR_HEIGHT);
+				//System.out.println("BUSH: "+bush[y][z].getPosDeco().x+" , "+bush[y][z].getPosDeco().y);
 			}
 		}
 		for(int m=0;m<7;m++){
 			int n = 0;
 			checkFruit();
 			if (n == 0){
-				batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,70,70);
+				batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
 			}
 			else if(fruits[m][n].isPick()){
 				fruit[m].dispose();
@@ -347,7 +349,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 				System.out.println(n);
 			}
 			else {
-				batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,70,70);
+				batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
 			}
 		}
 		setCamera();
@@ -384,7 +386,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		else {
 			for(int m =0;m<7;m++){
 				for(int n=0;n<20;n++) {
-					batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,70,70);
+					batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
 				}
 			}
 		}
