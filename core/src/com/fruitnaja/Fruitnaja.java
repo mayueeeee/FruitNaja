@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
 
+
 public class Fruitnaja extends ApplicationAdapter implements ApplicationListener {
 	public  static SpriteBatch batch;
 	private Texture img;
@@ -322,7 +323,15 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		batch.draw(imgB,0,0);
 		for (int y = 0;y <3;y++){
 			for(int z = 0;z < 100;z++){
-				batch.draw(deco[y],bush[y][z].getPosDeco().x,bush[y][z].getPosDeco().y,100,100);
+				if(y == 0){
+					batch.draw(deco[y],bush[y][z].getPosDeco().x,bush[y][z].getPosDeco().y,131,90);
+				}
+				else if (y == 1){
+					batch.draw(deco[y],bush[y][z].getPosDeco().x,bush[y][z].getPosDeco().y,126,90);
+				}
+				else {
+					batch.draw(deco[y], bush[y][z].getPosDeco().x, bush[y][z].getPosDeco().y, 134, 90);
+				}
 			}
 		}
 		if((camera1.position.x>960&&camera1.position.x<1000)&&(camera1.position.y<1040&&camera1.position.y>995)||(camera2.position.x>960&&camera2.position.x<1000)&&(camera2.position.y<1040&&camera2.position.y>995)){
