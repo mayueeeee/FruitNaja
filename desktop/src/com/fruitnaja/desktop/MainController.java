@@ -6,6 +6,7 @@ import com.fruitnaja.Charactor;
 import com.fruitnaja.Fruitnaja;
 import com.fruitnaja.Game;
 import com.fruitnaja.Music;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -58,8 +59,11 @@ public class MainController{
         stage.getScene().setRoot(root);
         System.out.println("Back btn press");
     }
+
     public void backToMain() throws IOException{
-        System.out.println("Buiiii");
+        stage=(Stage) btn_start_game.getScene().getWindow();
+        root = FXMLLoader.load(new URL("file:layouts/main.fxml"));
+        stage.getScene().setRoot(root);
     }
 //    private void showHowto(MouseEvent actionEvent) throws IOException {
 //        stage=(Stage) btn_back.getScene().getWindow();
@@ -70,9 +74,11 @@ public class MainController{
 
 
     //Select skill page -- Start Button
-    public void runGDX(MouseEvent mouseEvent)  {
+    public void runGDX(MouseEvent mouseEvent) throws IOException {
         //System.out.println("Play btn press");
         createPlayer();
+        backToMain();
+
         //System.out.println("-----gdx-----");
         //debugSelect();
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
