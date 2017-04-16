@@ -43,6 +43,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	private TextureRegion [][] poisoner;
 	int push1 = 0;
 	int push2 = 0;
+	Decoration [][] bush = new Decoration[3][100];
 
 
 	float etime;
@@ -60,7 +61,6 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		camera2.update();
 
 		batch = new SpriteBatch();
-		img = new Texture("chai.png");
 		imgB = new Texture("map/bg-green.jpg");
 		grid1 = new Texture("sprite/Grid01.png");
 		grid2 = new Texture("sprite/Grid02.png");
@@ -81,6 +81,17 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		stuner = TextureRegion.split(grid3,127,182);
 		poisoner = TextureRegion.split(grid4,127,182);
 		traper = TextureRegion.split(grid5,127,182);
+		for (int y = 0;y <100;y++){
+			for(int z = 0;z < 3;z++){
+				bush[z][y] = new Decoration() ;
+			}
+		}
+		for (int y = 0;y <100;y++){
+			for(int z = 0;z < 3;z++){
+				bush[z][y].setPosDeco((float)(Math.random()*7000+100),(float)(Math.random()*4000+100));
+			}
+		}
+
 
 
 		setAnimation(healer,heal);
@@ -264,7 +275,12 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		batch.setProjectionMatrix(camera1.combined);
 		batch.begin();
 		batch.draw(imgB,0,0);
-		batch.draw(deco[0],(float) (Math.random()*100),(float) (Math.random()*100),100,100);
+		for (int y = 0;y <3;y++){
+			for(int z = 0;z < 100;z++){
+				batch.draw(deco[y],bush[y][z].getPosDeco().x,bush[y][z].getPosDeco().y,100,100);
+			}
+		}
+
 		if((camera1.position.x>960&&camera1.position.x<1000)&&(camera1.position.y<1040&&camera1.position.y>995)||(camera2.position.x>960&&camera2.position.x<1000)&&(camera2.position.y<1040&&camera2.position.y>995)){
 			batch.enableBlending();
 		}
@@ -283,6 +299,11 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		batch.setProjectionMatrix(camera2.combined);
 		batch.begin();
 		batch.draw(imgB,0,0);
+		for (int y = 0;y <3;y++){
+			for(int z = 0;z < 100;z++){
+				batch.draw(deco[y],bush[y][z].getPosDeco().x,bush[y][z].getPosDeco().y,100,100);
+			}
+		}
 		if((camera1.position.x>960&&camera1.position.x<1000)&&(camera1.position.y<1040&&camera1.position.y>995)||(camera2.position.x>960&&camera2.position.x<1000)&&(camera2.position.y<1040&&camera2.position.y>995)){
 			batch.enableBlending();
 		}
@@ -321,8 +342,6 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
-		System.out.println("xxxx");
 	}
 
 	@Override
