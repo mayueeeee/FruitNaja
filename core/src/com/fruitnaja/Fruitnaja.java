@@ -205,7 +205,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 
 		}
 
-		else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+		else if (Gdx.input.isKeyPressed(Input.Keys.D)&&camera1.position.x<6761) {
 			if(person.getPos().x>(Gdx.graphics.getWidth()/2)){
 				camera1.position.x += camSpeed * deltatime;
 			}
@@ -216,12 +216,12 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 			push1 = 2;
 		}
 
-		else if (Gdx.input.isKeyPressed(Input.Keys.S)&&camera1.position.y>300) {
+		else if (Gdx.input.isKeyPressed(Input.Keys.S)&&camera1.position.y>366) {
 			camera1.position.y -= camSpeed * deltatime;
 			batch.draw((TextureRegion) person.animationS.getKeyFrame(etime,true),camera1.position.x,camera1.position.y);
 		}
 
-		else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+		else if (Gdx.input.isKeyPressed(Input.Keys.W)&&camera1.position.y<4592) {
 			if(person.getPos().y>(Gdx.graphics.getHeight()/2)){
 				camera1.position.y += camSpeed * deltatime;
 			}
@@ -250,7 +250,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 			push2 = 1;
 		}
 
-		else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+		else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)&&camera2.position.x<6761) {
 			if(person.getPos().x>(Gdx.graphics.getWidth()/2)){
 				camera2.position.x += camSpeed * deltatime;
 			}
@@ -261,12 +261,12 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 			push2 = 2;
 		}
 
-		else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+		else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)&&camera2.position.y>366) {
 			camera2.position.y -= camSpeed * deltatime;
 			batch.draw((TextureRegion) person.animationS.getKeyFrame(etime,true),camera2.position.x,camera2.position.y);
 		}
 
-		else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+		else if (Gdx.input.isKeyPressed(Input.Keys.UP)&&camera2.position.y<4592) {
 			if(person.getPos().y>(Gdx.graphics.getHeight()/2)){
 				camera2.position.y += camSpeed * deltatime;
 			}
@@ -284,9 +284,21 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 			}
 		}
 		else {
-		batch.draw(hero[0][0], person.getPos().x,person.getPos().y );
+			batch.draw(hero[0][0], person.getPos().x,person.getPos().y );
+		}
 	}
-}
+
+
+	public void checkFruit(){
+		for(int m =0;m<7;m++){
+			for (int n = 0; n < 20; n++){
+				if((camera1.position.x>fruits[m][n].getPosFruit().x-47&&camera1.position.x<fruits[m][n].getPosFruit().x+47)&&(camera1.position.y<fruits[m][n].getPosFruit().x+19&&camera1.position.y>fruits[m][n].getPosFruit().y-19)||(camera2.position.x>fruits[m][n].getPosFruit().x-47&&camera2.position.x<fruits[m][n].getPosFruit().x+47)&&(camera2.position.y<fruits[m][n].getPosFruit().x+19&&camera2.position.y>fruits[m][n].getPosFruit().y-19)){
+					fruits[m][n].setPick(true);
+				}
+			}
+		}
+	}
+
 
 
 	@Override
@@ -310,6 +322,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		batch.setProjectionMatrix(camera1.combined);
 		batch.begin();
 		batch.draw(imgB,0,0);
+
 		for (int y = 0;y <3;y++){
 			for(int z = 0;z < 100;z++){
 				batch.draw(deco[y],bush[y][z].getPosDeco().x,bush[y][z].getPosDeco().y,131,90);
@@ -324,6 +337,19 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 				for(int n=0;n<20;n++) {
 					batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,70,70);
 				}
+		for(int m =0;m<7;m++){
+			int n = 0;
+			checkFruit();
+			if (n == 0){
+				batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,100,100);
+			}
+			else if(fruits[m][n].isPick()){
+				fruit[m].dispose();
+				n += 1;
+				System.out.println(n);
+			}
+			else {
+				batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,100,100);
 			}
 		}
 //		setCamera(trap,traper);
@@ -332,6 +358,18 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		setCamera2(getSprite((Charactor) player2),player2);
 
 		player1.setPos(new Vector2(camera1.position.x,camera1.position.y));
+		if (camera1.position.x<512||camera1.position.y<366){
+			trap.move();
+			batch.draw(traper[0][0],trap.getPos().x,trap.getPos().y);
+		}
+		else {
+			setCamera(trap,traper);
+			trap.setPos(new Vector2(camera1.position.x,camera1.position.y));
+		}
+
+		setCamera2(stun,stuner);
+		System.out.println(camera1.position.x+" "+camera1.position.y);
+
 
 		batch.end();
 
@@ -342,6 +380,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		batch.setProjectionMatrix(camera2.combined);
 		batch.begin();
 		batch.draw(imgB,0,0);
+
 		for (int y = 0;y <3;y++){
 			for(int z = 0;z < 100;z++){
 				if(y == 0){
