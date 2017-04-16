@@ -55,8 +55,12 @@ public abstract class Person implements Attackable {
         return pos;
     }
 
-    public void setPos(Vector2 pos) {
-        this.pos = pos;
+    public void setPosX(float x ) {
+        this.pos.x = x;
+    }
+
+    public void setPosY(float y ) {
+        this.pos.y = y;
     }
 
     public boolean isLive() {
@@ -68,21 +72,6 @@ public abstract class Person implements Attackable {
         this.stamina = 100;
         this.pos = new Vector2(512/2,300/2);
         this.live = true;
-    }
-
-    public void move(){
-        if((Gdx.input.isKeyPressed(Input.Keys.LEFT)||Gdx.input.isKeyPressed(Input.Keys.A))&&pos.x>0){
-            pos.x-=100*Gdx.graphics.getDeltaTime();
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.D)||Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            pos.x+=100*Gdx.graphics.getDeltaTime();
-        }
-        else if ((Gdx.input.isKeyPressed(Input.Keys.W)||Gdx.input.isKeyPressed(Input.Keys.UP))){
-            pos.y+=100*Gdx.graphics.getDeltaTime();
-        }
-        else if ((Gdx.input.isKeyPressed(Input.Keys.S)||Gdx.input.isKeyPressed(Input.Keys.DOWN))&&pos.y>0){
-            pos.y-=100*Gdx.graphics.getDeltaTime();
-        }
     }
 
     public void die(){
