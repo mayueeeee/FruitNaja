@@ -17,7 +17,9 @@ import java.util.ArrayList;
 public class Game {
     /** Require constants **/
     public static final int WIDTH=1024,HEIGH=600;
-
+    public static final int DECOR_WIDTH=131,DECOR_HEIGHT=90;
+    public static final int FRUIT_WIDTH=70,FRUIT_HEIGHT=70;
+    public static final int CHAR_WIDTH=127,CHAR_HEIGHT=182;
     /** Objects Store **/
     private static ArrayList<Person> player = new ArrayList();
 
@@ -63,5 +65,12 @@ public class Game {
             return 3;
         }
         return 0;
+    }
+
+    public static void saveHighScore(Person x){
+
+    }
+    public static void loadHighScore(){
+
     }
 }
