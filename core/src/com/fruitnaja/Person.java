@@ -30,6 +30,10 @@ public abstract class Person implements Attackable {
     Animation animationA;
     TextureRegion[] animationframeD = new TextureRegion[2];
     Animation animationD;
+    TextureRegion[] animationframeAttackLeft = new TextureRegion[10];
+    Animation animationAttackLeft;
+    TextureRegion[] animationframeAttackRight = new TextureRegion[10];
+    Animation animationAttackRight;
 
     ArrayList<Fruit> checkFruit = new ArrayList<Fruit>();
     ArrayList<Weapon> checkWeapon = new ArrayList<Weapon>();
@@ -104,10 +108,14 @@ public abstract class Person implements Attackable {
         }
     }
 
-    public void attack(){
+    public boolean attack(){
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)&& TimeUtils.nanoTime()-lastHitTimeS>1000000000){
-            System.out.println("attack");
             lastHitTimeS = TimeUtils.nanoTime();
+            return true;
+
+        }
+        else {
+            return false;
         }
     }
 

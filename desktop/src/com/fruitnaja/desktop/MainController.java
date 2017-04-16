@@ -2,7 +2,6 @@ package com.fruitnaja.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.fruitnaja.Game;
 import com.fruitnaja.Fruitnaja;
 import com.fruitnaja.Music;
 import javafx.fxml.FXML;
@@ -16,7 +15,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 
 import java.io.IOException;
 import java.net.URL;
@@ -61,8 +59,8 @@ public class MainController{
         System.out.println("Play btn press");
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.forceExit = false;
-        config.width = Game.WIDTH;
-        config.height = Game.HEIGH;
+        config.width = 1280;
+        config.height = 720;
         new LwjglApplication(new Fruitnaja(), config);
     }
 
