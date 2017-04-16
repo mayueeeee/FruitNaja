@@ -32,15 +32,15 @@ public class Music {
         }
         //Select music
         if(list ==1){
-            bip = "music/01 Anywhere I Go.mp3";
+            bip = "music/edm.mp3";
         }
         else if(list == 2){
-            bip = "music/ping fire.mp3";
+            bip = "music/nor.mp3";
         }
         Media hit = new Media(new File(bip).toURI().toString());
         mediaPlayer = new MediaPlayer(hit);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.setRate(1.5);
+        mediaPlayer.setRate(1.095);
         mediaPlayer.play();
     }
 

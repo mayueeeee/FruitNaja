@@ -38,7 +38,30 @@ public class Game {
         return index;
     }
 
-    public void clearStorePlayer(){
+    public static void clearStorePlayer(){
         player.clear();
+    }
+
+    public static int transfromSkill(String skill){
+        System.out.println("IP :"+skill);
+        if(skill.equals("skill_heal")){
+            return 1;
+        }
+        else if(skill.equals("skill_trap")){
+            return 5;
+        }
+        else if(skill.equals("skill_shield")){
+            return 2;
+        }
+        else if(skill.equals("skill_stun")){
+            return 4;
+        }
+        else if(skill.equals("skill_random")){
+            return 6;
+        }
+        else if(skill.equals("skill_poison")){
+            return 3;
+        }
+        return 0;
     }
 }

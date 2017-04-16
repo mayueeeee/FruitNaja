@@ -13,13 +13,10 @@ import java.util.ArrayList;
  * Created by user on 9/4/2560.
  */
 public abstract class Person implements Attackable {
-    //private String name;
     private int hp;
     private int stamina;
     private Vector2 pos;
     private  boolean live;
-    private static int idS = 0;
-    private int id;
     private long lastHitTimeS;
 
     TextureRegion[] animationframeS = new TextureRegion[2];
@@ -66,25 +63,12 @@ public abstract class Person implements Attackable {
         return live;
     }
 
-    public static int getIdS() {
-        return idS;
-    }
-
-    public static void setIdS(int idS) {
-        Person.idS = idS;
-    }
-
-    public Person(int hp, int stamina) {
-        //this.name = name;
-        this.hp = hp;
-        this.stamina = stamina;
+    public Person() {
+        this.hp = 200;
+        this.stamina = 100;
         this.pos = new Vector2(512/2,300/2);
         this.live = true;
-        this.id = id;
-        this.idS += 1;
     }
-
-
 
     public void move(){
         if((Gdx.input.isKeyPressed(Input.Keys.LEFT)||Gdx.input.isKeyPressed(Input.Keys.A))&&pos.x>0){
@@ -112,7 +96,6 @@ public abstract class Person implements Attackable {
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)&& TimeUtils.nanoTime()-lastHitTimeS>1000000000){
             lastHitTimeS = TimeUtils.nanoTime();
             return true;
-
         }
         else {
             return false;

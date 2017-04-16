@@ -11,7 +11,6 @@ public class Charactor extends Person {
     public int skill;
     private long lastHitTimeS;
 
-
     public int getSkill() {
         return skill;
     }
@@ -20,8 +19,8 @@ public class Charactor extends Person {
         this.skill = skill;
     }
 
-    public Charactor(String name, int hp, int stamina,  int id, int skill) {
-        super(hp, stamina);
+    public Charactor(int skill) {
+        super();
         this.skill = skill;
     }
 
