@@ -2,16 +2,20 @@ package com.fruitnaja.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.fruitnaja.Charactor;
 import com.fruitnaja.Fruitnaja;
+import com.fruitnaja.Game;
 import com.fruitnaja.Music;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -29,7 +33,7 @@ public class MainController{
     @FXML
     private Button backBtn;
     @FXML
-    private ImageView btn_start,btn_back,btn_highscore,btn_play;
+    private ImageView btn_start,btn_back,btn_highscore,btn_play,btn_start_game;
     @FXML
     private Stage stage;
     @FXML
@@ -42,7 +46,7 @@ public class MainController{
     private Text player1_release,player2_release;
     @FXML
     private ImageView skill_heal,skill_poison,skill_shield,skill_stun,skill_trap,skill_random;
-    private String[] select_skill = new String[2];
+    private static String[] select_skill = new String[2];
 
 
     /* Methods for called by FXML */
@@ -54,10 +58,23 @@ public class MainController{
         stage.getScene().setRoot(root);
         System.out.println("Back btn press");
     }
+    public void backToMain() throws IOException{
+        System.out.println("Buiiii");
+    }
+//    private void showHowto(MouseEvent actionEvent) throws IOException {
+//        stage=(Stage) btn_back.getScene().getWindow();
+//        root = FXMLLoader.load(new URL("file:layouts/howtoplay.fxml"));
+//        stage.getScene().setRoot(root);
+//        System.out.println("Back btn press");
+//    }
+
 
     //Select skill page -- Start Button
     public void runGDX(MouseEvent mouseEvent)  {
-        System.out.println("Play btn press");
+        //System.out.println("Play btn press");
+        createPlayer();
+        //System.out.println("-----gdx-----");
+        //debugSelect();
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.forceExit = false;
         config.width = 1280;
@@ -280,9 +297,6 @@ public class MainController{
         catch (IOException e){
 
         }
-
-
-
         //System.out.println(skill);
         debugSelect();
 
@@ -330,9 +344,21 @@ public class MainController{
         }
     }
 
-    //public void transformSkill
     public void createPlayer(){
-       // Game.addPlayer(new Charactor())
+        debugSelect();
+       Game.addPlayer(new Charactor(Game.transfromSkill(select_skill[0])));
+       Game.addPlayer(new Charactor(Game.transfromSkill(select_skill[1])));
+    }
+
+    public void showHowto(MouseEvent mouseEvent) throws IOException {
+        System.out.println("----howto-----");
+        debugSelect();
+        stage=(Stage) btn_start.getScene().getWindow();
+        root = FXMLLoader.load(new URL("file:layouts/howtoplay.fxml"));
+        stage.getScene().setRoot(root);
+        Scene scene = stage.getScene();
+        System.out.println("Highscore btn press");
+        System.out.println("xxcx");
     }
 
 
