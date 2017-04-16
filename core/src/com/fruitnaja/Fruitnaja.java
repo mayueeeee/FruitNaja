@@ -19,29 +19,24 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	public  static SpriteBatch batch;
 	private Texture img;
 	private Texture imgB;
-	private Texture grid1;
-	private Texture grid2;
-	private Texture grid3;
-	private Texture grid4;
-	private Texture grid5;
+	private Texture grid1,grid2,grid3,grid4,grid5,grid6;
 	private Texture [] fruit = new Texture[7];
 	private Texture [] deco = new Texture[3];
 	private long lastHitTime;
-	int x = 0,y = 0;
-	Person heal = new Charactor("U",200,100,0,1);
-	Person stun = new Charactor("fluk",200,100,1,2);
-	Person shield = new Charactor("Baitoey",200,100,2,3);
-	Person trap = new Charactor("Tik",200,100,3,4);
-	Person poison = new Charactor("Myuu",200,100,4,5);
+	private int x = 0,y = 0;
+	private Person heal = new Charactor(1);
+	private Person stun = new Charactor(2);
+	private Person shield = new Charactor(3);
+	private Person trap = new Charactor(4);
+	private Person poison = new Charactor(5);
+
+	Person player1 = Game.getPlayer(0);
+	Person player2 = Game.getPlayer(1);
 	public static Camera camera1;
 	public static Camera camera2;
 	private float camSpeed = 100f;
 	private double deltatime;
-	private TextureRegion [][] healer;
-	private TextureRegion [][] stuner;
-	private TextureRegion [][] shielder;
-	private TextureRegion [][] traper;
-	private TextureRegion [][] poisoner;
+	private TextureRegion [][] healer,stuner,shielder,traper,poisoner,random;
 	int push1 = 0;
 	int push2 = 0;
 	Decoration [][] bush = new Decoration[3][100];
@@ -54,14 +49,15 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 
 	@Override
 	public void create () {
+		/** Generate camera 1 **/
 		camera1 = new OrthographicCamera(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight());
 		camera1.position.set(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight(),0);
 		camera1.update();
-
+		/** Generate camera 2 **/
 		camera2 = new OrthographicCamera(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight());
 		camera2.position.set(500+Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight(),0);
 		camera2.update();
-
+		/** Load asset **/
 		batch = new SpriteBatch();
 		imgB = new Texture("map/bg-green.jpg");
 		grid1 = new Texture("sprite/Grid01.png");
@@ -69,6 +65,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		grid3 = new Texture("sprite/Grid03.png");
 		grid4 = new Texture("sprite/Grid04.png");
 		grid5 = new Texture("sprite/Grid05.png");
+		grid6 = new Texture("sprite/Grid06.png");
 		for(int q = 0; q<7;q++){
 			int t =q+1;
 			fruit[q] = new Texture("fruits/"+t+".png");
@@ -77,35 +74,42 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 			int t =q+1;
 			deco[q] = new Texture("Deco/b"+t+".png");
 		}
-
+		/** Load asset **/
 		healer = TextureRegion.split(grid2,127,182);
 		shielder = TextureRegion.split(grid1,127,182);
 		stuner = TextureRegion.split(grid3,127,182);
 		poisoner = TextureRegion.split(grid4,127,182);
 		traper = TextureRegion.split(grid5,127,182);
+		random = TextureRegion.split(grid6,127,182);
 		for (int y = 0;y <100;y++){
 			for(int z = 0;z < 3;z++){
-				bush[z][y] = new Decoration() ;
+				bush[z][y] = new Decoration();
+				bush[z][y].setPosDeco((float)(Math.random()*7000+100),(float)(Math.random()*4000+100));
 			}
 		}
+		/*
 		for (int y = 0;y <100;y++){
 			for(int z = 0;z < 3;z++){
 				bush[z][y].setPosDeco((float)(Math.random()*7000+100),(float)(Math.random()*4000+100));
 			}
-		}
+		}*/
 
 		for(int n=0;n<20;n++) {
 			for(int m = 0;m<7;m++) {
 				fruits[m][n] = new Fruit();
-			}
-		}
-		for(int n=0;n<20;n++) {
-			for(int m = 0;m<7;m++) {
 				fruits[m][n].setPosFruit((float)(Math.random()*7000+100),(float)(Math.random()*4000+100));
 			}
 		}
 
+		/* for(int n=0;n<20;n++) {
+			for(int m = 0;m<7;m++) {
+				fruits[m][n].setPosFruit((float)(Math.random()*7000+100),(float)(Math.random()*4000+100));
+			}
+		}*/
 
+
+		setAnimation(getSprite((Charactor) player1),player1);
+		setAnimation(getSprite((Charactor) player2),player2);
 
 		setAnimation(healer,heal);
 		setAnimation(shielder,shield);
@@ -118,6 +122,31 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 
 	@Override
 	public void resize(int width, int height){
+
+	}
+
+	public TextureRegion[][] getSprite(Charactor x){
+		if(x.getSkill()==1){
+			return healer;
+		}
+		else if(x.getSkill()==2){
+			return shielder;
+		}
+		else if(x.getSkill()==3){
+			return poisoner;
+		}
+		else if(x.getSkill()==4){
+			return stuner;
+		}
+		else if(x.getSkill()==5){
+			return traper;
+		}
+		else if(x.getSkill()==6){
+			return random;
+		}
+		else {
+			return null;
+		}
 
 	}
 
@@ -167,7 +196,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		person.animationAttackRight = new Animation(1f/2f,person.animationframeAttackRight);
 	}
 
-	public void setCamera(Person person,TextureRegion [][] hero){
+	public void setCamera(TextureRegion [][] hero ,Person person){
 		if (Gdx.input.isKeyPressed(Input.Keys.A)&&camera1.position.x>512) {
 
 			camera1.position.x -= camSpeed * deltatime;
@@ -214,7 +243,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		}
 	}
 
-	public void setCamera2(Person person,TextureRegion [][] hero){
+	public void setCamera2(TextureRegion [][] hero, Person person){
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			camera2.position.x -= camSpeed * deltatime;
 			batch.draw((TextureRegion) person.animationA.getKeyFrame(etime,true),camera2.position.x,camera2.position.y);
@@ -264,24 +293,16 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	public void render () {
 		etime += Gdx.graphics.getDeltaTime();
 		deltatime = Gdx.graphics.getDeltaTime();
-
 		if (Gdx.input.isKeyPressed(Input.Keys.G)&&TimeUtils.nanoTime()-lastHitTime>1000000000){
 			heal.setHp(heal.getHp()-50);
 			lastHitTime = TimeUtils.nanoTime();
 		}
-
-
 		heal.die();
 		if(heal.isLive()==false){
 			System.exit(0);
 		}
-
-
 //		System.out.println(camera.position.y);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-
-
 
 		/*Left Half*/
 		Gdx.gl.glViewport( 0,0,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight() );
@@ -291,7 +312,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		batch.draw(imgB,0,0);
 		for (int y = 0;y <3;y++){
 			for(int z = 0;z < 100;z++){
-				batch.draw(deco[y],bush[y][z].getPosDeco().x,bush[y][z].getPosDeco().y,100,100);
+				batch.draw(deco[y],bush[y][z].getPosDeco().x,bush[y][z].getPosDeco().y,131,90);
 			}
 		}
 
@@ -301,21 +322,21 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		else {
 			for(int m =0;m<7;m++){
 				for(int n=0;n<20;n++) {
-
-						batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,100,100);
-
+					batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,70,70);
 				}
-
 			}
 		}
-		setCamera(trap,traper);
-		setCamera2(stun,stuner);
-		trap.setPos(new Vector2(camera1.position.x,camera1.position.y));
+//		setCamera(trap,traper);
+//		setCamera2(stun,stuner);
+		setCamera(getSprite((Charactor) player1),player1);
+		setCamera2(getSprite((Charactor) player2),player2);
+
+		player1.setPos(new Vector2(camera1.position.x,camera1.position.y));
 
 		batch.end();
 
 
-   		 /*Right Half*/
+		/*Right Half*/
 		Gdx.gl.glViewport( Gdx.graphics.getWidth()/2,0,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight() );
 		camera2.update();
 		batch.setProjectionMatrix(camera2.combined);
@@ -340,13 +361,15 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		else {
 			for(int m =0;m<7;m++){
 				for(int n=0;n<20;n++) {
-					batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,100,100);
+					batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,70,70);
 				}
 			}
 		}
-		stun.setPos(new Vector2(camera2.position.x,camera2.position.y));
-		setCamera(trap,traper);
-		setCamera2(stun,stuner);
+		player2.setPos(new Vector2(camera2.position.x,camera2.position.y));
+//		setCamera(trap,traper);
+//		setCamera2(stun,stuner);
+		setCamera(getSprite((Charactor) player1),player1);
+		setCamera2(getSprite((Charactor) player2),player2);
 		batch.end();
 //
 //
