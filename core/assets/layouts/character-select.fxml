@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,7 +14,7 @@
             <Image url="@../background/BGChar2.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="btn_back" fitHeight="150.0" fitWidth="200.0" layoutX="306.0" layoutY="455.0" onMouseClicked="#backToMain" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
+      <ImageView fx:id="btn_back" fitHeight="56.0" fitWidth="145.0" layoutX="353.0" layoutY="464.0" onMouseClicked="#backToMain" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
          <image>
             <Image url="@../button/btBack.png" />
          </image>
@@ -60,10 +61,13 @@
             <Font name="Cloud-Light" size="17.0" />
          </font>
       </Text>
-      <ImageView fx:id="btn_start" fitHeight="150.0" fitWidth="200.0" layoutX="528.0" layoutY="452.0" onMouseClicked="#runGDX" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
+      <ImageView fx:id="btn_start" disable="true" fitHeight="56.0" fitWidth="145.0" layoutX="514.0" layoutY="464.0" onMouseClicked="#runGDX" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
          <image>
             <Image url="@../button/btStart.png" />
          </image>
+         <effect>
+            <ColorAdjust brightness="-0.2" saturation="-1.0" />
+         </effect>
       </ImageView>
    </children>
 </AnchorPane>

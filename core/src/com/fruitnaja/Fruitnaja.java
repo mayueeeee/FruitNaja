@@ -322,6 +322,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	public void dispose () {
 		batch.dispose();
 		img.dispose();
+		System.out.println("xxxx");
 	}
 
 	@Override

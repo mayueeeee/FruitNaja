@@ -7,10 +7,13 @@ import java.util.ArrayList;
 
 /**
  * Created by Sarunyu Chankong on 5/4/2560.
+ *
  * All about Game class
+ * -This class is helper class (All static methods,constants,data fields)
  * -Store require constants
  * -Store player in game
  */
+
 public class Game {
     /** Require constants **/
     public static final int WIDTH=1024,HEIGH=600;
@@ -25,7 +28,7 @@ public class Game {
         System.out.println(json.prettyPrint(list));
     }
 
-    public Person getPlayer(int index) {
+    public static Person getPlayer(int index) {
         return player.get(index);
     }
 

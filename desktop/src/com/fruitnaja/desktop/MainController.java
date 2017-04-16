@@ -16,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+
 import java.io.IOException;
 import java.net.URL;
 
@@ -272,6 +273,8 @@ public class MainController{
             showSelectSkill(select+1,skill);
             if (select_skill[1]!=null){
                 disableSkill();
+                btn_start.setEffect(null);
+                btn_start.setDisable(false);
             }
         }
         catch (IOException e){
@@ -294,11 +297,16 @@ public class MainController{
     }
 
     public void releaseSkill(MouseEvent mouseEvent){
+        ColorAdjust grayscale = new ColorAdjust();
+        grayscale.setSaturation(-1);
+        grayscale.setBrightness(-0.2);
         String player = mouseEvent.getPickResult().getIntersectedNode().getId().substring(6,7);
         int player_id = Integer.parseInt(player);
         debugSelect();
         if (select_skill[1]!=null){
             enableSkill(player_id,true);
+            btn_start.setDisable(true);
+            btn_start.setEffect(grayscale);
         }
 
         try {
@@ -322,8 +330,9 @@ public class MainController{
         }
     }
 
+    //public void transformSkill
     public void createPlayer(){
-
+       // Game.addPlayer(new Charactor())
     }
 
 

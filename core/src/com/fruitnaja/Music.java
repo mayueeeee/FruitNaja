@@ -5,7 +5,11 @@ import javafx.scene.media.MediaPlayer;
 import java.io.File;
 
 /**
- * Created by nutno on 5/4/2560.
+ * Created by Sarunyu Chankong on 5/4/2560.
+ *
+ * All about Game class
+ * -This class is helper class (All static methods,constants,data fields)
+ *
  */
 
 public class Music {
