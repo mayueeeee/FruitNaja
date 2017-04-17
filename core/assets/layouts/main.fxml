@@ -16,22 +16,17 @@
             <Image url="@../FruitNaja.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="btn_highscore" fitHeight="150.0" fitWidth="200.0" layoutX="289.0" layoutY="366.0" onMouseClicked="#showHighScore" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
-         <image>
-            <Image url="@../button/btScore.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="btn_option" fitHeight="150.0" fitWidth="200.0" layoutX="530.0" layoutY="365.0" onMouseClicked="#showOption" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
+      <ImageView fx:id="btn_option" fitHeight="150.0" fitWidth="200.0" layoutX="415.0" layoutY="363.0" onMouseClicked="#showOption" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
          <image>
             <Image url="@../button/btOption.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="btn_exit" fitHeight="150.0" fitWidth="200.0" layoutX="761.0" layoutY="363.0" onMouseClicked="#exitGame" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
+      <ImageView fx:id="btn_exit" fitHeight="150.0" fitWidth="200.0" layoutX="646.0" layoutY="361.0" onMouseClicked="#exitGame" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
          <image>
             <Image url="@../button/btExit.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="btn_play" fitHeight="92.0" fitWidth="205.0" layoutX="54.0" layoutY="364.0" onMouseClicked="#showSkill" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
+      <ImageView fx:id="btn_play" fitHeight="92.0" fitWidth="205.0" layoutX="180.0" layoutY="362.0" onMouseClicked="#showSkill" pickOnBounds="true" preserveRatio="true" styleClass="animate-zoom">
          <image>
             <Image url="@../button/btPlay.png" />
          </image>
