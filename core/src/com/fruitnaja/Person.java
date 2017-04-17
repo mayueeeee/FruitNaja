@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by user on 9/4/2560.
  */
-public abstract class Person implements Attackable {
+public abstract class Person {
     private int hp;
     private int stamina;
     private Vector2 pos;

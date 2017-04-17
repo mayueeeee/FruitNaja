@@ -66,10 +66,6 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	int [] colum = {4,4};
     int skill3;
     int numTrap = 0;
-//	int [] rollRe = {4,4};
-//	int columRe = 4;
-
-
 	float etime;
 
 	public String changSkill(int skill){
@@ -81,7 +77,6 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		}
 		return "";
 	}
-
 
 	@Override
 	public void create () {
@@ -145,11 +140,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		rePlayer1 = TextureRegion.split(stReUseSkillPlayer1,Game.ST_WIDTH,Game.ST_HEIGHT);
 		rePlayer2 = TextureRegion.split(stReUseSkillPlayer2,Game.ST_WIDTH,Game.ST_HEIGHT);
 
-
 		/** Load asset **/
-
-
-
         /** Generate Decorations **/
 		for (int y = 0;y <100;y++){
 			for(int z = 0;z < 3;z++){
@@ -191,10 +182,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
         char_body_rect[1] = new Rectangle(camera2.position.x,camera2.position.y,Game.CHAR_WIDTH,Game.CHAR_HEIGHT);
 	}
 
-	@Override
-	public void resize(int width, int height){
 
-	}
 
 	public TextureRegion[][] getSprite(Charactor x){
 		if(x.getSkill()==1){
@@ -218,7 +206,6 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		else {
 			return null;
 		}
-
 	}
 
 	public void setAnimation(TextureRegion [][] ani,Person person){
@@ -229,7 +216,6 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 			person.animationframeS[index++] = ani[i][j];
 		}
 		person.animationS = new Animation(1f/2f,person.animationframeS);
-
 		//walk up
 		index = 0;
 		i=1;
@@ -271,15 +257,12 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		if (Gdx.input.isKeyPressed(Input.Keys.A)&&player1.getPos().x>512&&player1.getPos().x<6761&&!player1_collision.left) {
 			camera1.position.x -= camSpeed * deltatime;
 		}
-
 		else if (Gdx.input.isKeyPressed(Input.Keys.D)&&player1.getPos().x>512&&player1.getPos().x<6761&&!player1_collision.right) {
 			camera1.position.x += camSpeed * deltatime;
 		}
-
 		else if (Gdx.input.isKeyPressed(Input.Keys.S)&&player1.getPos().y<4592&&player1.getPos().y>366&&!player1_collision.buttom) {
 			camera1.position.y -= camSpeed * deltatime;
 		}
-
 		else if (Gdx.input.isKeyPressed(Input.Keys.W)&&player1.getPos().y>366&&player1.getPos().y<4592&&!player1_collision.top) {
 			camera1.position.y += camSpeed * deltatime;
 		}
@@ -353,7 +336,6 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		}
 		char_rect[0] = new Rectangle(person.getPos().x+45,person.getPos().y,48,32);
 		char_body_rect[0] = new Rectangle(person.getPos().x+15,person.getPos().y,106,75);
-
 	}
 
 	public void move2(TextureRegion [][] hero,Person person,boolean hit){
@@ -418,7 +400,6 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
                 }
             }
             charactor.setUse(false,0);
-
         }
         else if (charactor.getSkill() == 3 && charactor.getUse()[1]){
 	        poisonFruit.add(charactor.getPos().x,charactor.getPos().y);
@@ -548,7 +529,6 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
             }
         }
 		font.draw(batch, Integer.toString(charactor.getScore()), camera.position.x+260,camera.position.y+280);
-//
 	}
 
 	public void checkscore(int [] chec, Person player, Charactor playerf){
@@ -574,15 +554,12 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
         int checkPoisonFruit2 = Collision.checkCollision(char_body_rect[1],poisonFruitStore_rect);
         int checkTrap1 = Collision.checkCollision(char_body_rect[0],trapStore_rect);
         int checkTrap2 = Collision.checkCollision(char_body_rect[1],trapStore_rect);
-
 		etime += Gdx.graphics.getDeltaTime();
 		deltatime = Gdx.graphics.getDeltaTime();
-
 		heal.die();
 		if(heal.isLive()==false){
 			System.exit(0);
 		}
-//		System.out.println(camera.position.y);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		/*Left Half*/
@@ -683,15 +660,6 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		}
         checkscore(check2,player2,playerf2);
         System.out.println("Score2: "+player2.getScore());
-        /*switch (check2[0]){
-			case 0 : player2.setScore(player2.getScore()+10); break;
-			case 1 : player2.setScore(player2.getScore()+20); break;
-			case 2 : player2.setHp(player2.getHp()+50); playerf2.setIncreseHP(true); break;
-			case 3 : player2.setStamina(player2.getStamina()+25);playerf2.setIncreseStamina(true); break;
-			case 4 : player2.setScore(player2.getScore()+30); break;
-			case 5 : player2.setScore(player2.getScore()+40); break;
-			case 6 : player2.setScore(player2.getScore()+50); break;
-		}*/
 		for(int m =0;m<7;m++){
 			for(int n=0;n<20;n++) {
 				if (!fruits[m][n].isPick()){
@@ -731,23 +699,6 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 			batch.draw(lose,camera2.position.x-324,camera2.position.y-360,Gdx.graphics.getWidth()/2+50,Gdx.graphics.getHeight()+50);
 		}
 		batch.end();
-//
-//
-//
-// 		System.out.println(heal.getPos().y);
-
-//		System.out.println(heal.getStamina());
-
-
-
-
-
-
-
-
-
-
-
 	}
 
 	@Override
