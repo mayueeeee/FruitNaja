@@ -3,6 +3,8 @@ package com.fruitnaja;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 
+import java.util.ArrayList;
+
 /**
  * Created by Sarunyu Chankong on 12/4/2560.
  */
@@ -78,7 +80,7 @@ public class Collision {
             for (int j = 0; j < obj_rect[i].length; j++) {
                 tst = Intersector.overlaps(player_rect,obj_rect[i][j]);
                 if (tst == true){
-                    System.out.println("Fruit bang!");
+                    System.out.println("Fruit bang on "+i+","+j);
                     returnarr[0]=i;
                     returnarr[1]=j;
 
@@ -87,5 +89,19 @@ public class Collision {
 
         }
         return returnarr;
+    }
+
+    public static int checkCollision(Rectangle player_rect , ArrayList<Rectangle> fruit_rect){
+        boolean tst;
+        int i=0;
+        for (Rectangle x:fruit_rect) {
+            tst = Intersector.overlaps(x,player_rect);
+            if(tst){
+                System.out.println("Poison index: "+i);
+                return i;
+            }
+            i++;
+        }
+        return  -1;
     }
 }

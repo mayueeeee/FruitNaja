@@ -9,26 +9,13 @@ import com.badlogic.gdx.math.Vector2;
  * Created by user on 12/4/2560.
  */
 public class Fruit implements Catchable {
-    private String name;
-    private int effect;
-    private Vector2 posFruit;
-    private int idFruit;
+    private int style;
+
+    private Vector2 posFruit = new Vector2();
     private boolean pick;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getEffect() {
-        return effect;
-    }
-
-    public void setEffect(int effect) {
-        this.effect = effect;
+    public int getStyle() {
+        return style;
     }
 
     public Vector2 getPosFruit() {
@@ -39,16 +26,6 @@ public class Fruit implements Catchable {
         this.posFruit = posFruit;
     }
 
-
-
-    public int getIdFruit() {
-        return idFruit;
-    }
-
-    public void setIdFruit(int idFruit) {
-        this.idFruit = idFruit;
-    }
-
     public boolean isPick() {
         return pick;
     }
@@ -57,11 +34,9 @@ public class Fruit implements Catchable {
         this.pick = pick;
     }
 
-    public Fruit(String name, int effect, int idFruit) {
-        this.name = name;
-        this.effect = effect;
-        this.posFruit = new Vector2((float) (Math.random()*7067),(float) (Math.random()*4064));
-        this.idFruit = idFruit;
+    public Fruit(float x,float y, int style) {
+        this.posFruit.add(x, y);
+        this.style = style;
         this.pick = false;
     }
 

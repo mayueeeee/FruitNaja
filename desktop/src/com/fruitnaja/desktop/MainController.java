@@ -31,7 +31,7 @@ public class MainController{
     @FXML
     private Button backBtn;
     @FXML
-    private ImageView btn_start,btn_back,btn_highscore,btn_play,btn_start_game;
+    private ImageView btn_start,btn_back,btn_highscore,btn_play,btn_start_game,btn_option;
     @FXML
     private Stage stage;
     @FXML
@@ -103,7 +103,7 @@ public class MainController{
 
     //Main page -- Option Button
     public void showOption(MouseEvent mouseEvent) throws IOException {
-        stage=(Stage) btn_highscore.getScene().getWindow();
+        stage=(Stage) btn_option.getScene().getWindow();
         root = FXMLLoader.load(new URL("file:layouts/option.fxml"));
         stage.getScene().setRoot(root);
         System.out.println("Option btn press");

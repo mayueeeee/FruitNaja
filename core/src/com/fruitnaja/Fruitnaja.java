@@ -15,6 +15,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
 
+import java.util.ArrayList;
+
 
 public class Fruitnaja extends ApplicationAdapter implements ApplicationListener {
 	public  static SpriteBatch batch;
@@ -46,12 +48,14 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	Fruit[][] fruits = new Fruit[7][20];
 	Weapon knife = new Weapon();
     Weapon hammer = new Weapon();
+    ArrayList<Fruit> poisonFruitStore = new ArrayList<Fruit>();
 
 	/** Rectangles for check collision **/
 	Rectangle [][] bush_rect = new Rectangle[3][100];
 	Rectangle [][] fruit_rect = new Rectangle[7][20];
 	Rectangle [] char_rect = new Rectangle[2];
     Rectangle [] char_body_rect = new Rectangle[2];
+    ArrayList<Rectangle> poisonFruitStore_rect = new ArrayList<Rectangle>();
     Collision player1_collision,player2_collision;
 
 	Charactor playerf1 = (Charactor) player1;
@@ -400,23 +404,31 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		}
 	}
 
-	public void  checkSkill(Charactor charactor){
+	public void checkSkill(Charactor charactor){
 	    if (charactor.getSkill() == 2 && charactor.getUse()[0]){
             batch.draw(trap,charactor.getTrap().x,charactor.getTrap().y);
             charactor.setUse(false,0);
         }
         else if (charactor.getSkill() == 3 && charactor.getUse()[1]){
 	        poisonFruit.add(charactor.getPos().x,charactor.getPos().y);
+	        poisonFruitStore_rect.add(new Rectangle(charactor.getPos().x, charactor.getPos().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT));
             skill3 = (int)(Math.random()*6);
-			batch.draw(fruitP[skill3],poisonFruit.x, poisonFruit.y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
-            charactor.setUse(false,1);
+			poisonFruitStore.add(new Fruit(charactor.getPos().x, charactor.getPos().y,skill3));
+			//batch.draw(fruitP[skill3],poisonFruit.x, poisonFruit.y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
+			for (Fruit x:poisonFruitStore) {
+				batch.draw(fruitP[x.getStyle()],x.getPosFruit().x, x.getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
+			}
+			charactor.setUse(false,1);
             cam2Skill3 = true;
         }
     }
 
     public void printPoison(){
 	    if (cam2Skill3){
-	        batch.draw(fruit[skill3],poisonFruit.x,poisonFruit.y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
+	        //batch.draw(fruit[skill3],poisonFruit.x,poisonFruit.y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
+			for (Fruit x:poisonFruitStore) {
+				batch.draw(fruitP[x.getStyle()],x.getPosFruit().x, x.getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
+			}
         }
     }
 
