@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * Created by user on 12/4/2560.
  */
-public class Weapon implements Catchable {
+public class Weapon {
     private String name;
     private int effect;
     private Vector2 posWeapon;
@@ -64,7 +64,4 @@ public class Weapon implements Catchable {
         
     }
 
-    public int catchObj(){
-        return 0;
-    }
 }

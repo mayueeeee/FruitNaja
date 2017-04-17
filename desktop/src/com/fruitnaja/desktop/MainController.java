@@ -6,7 +6,6 @@ import com.fruitnaja.Charactor;
 import com.fruitnaja.Fruitnaja;
 import com.fruitnaja.Game;
 import com.fruitnaja.Music;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -16,11 +15,9 @@ import javafx.scene.control.Button;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 
 import java.io.IOException;
 import java.net.URL;

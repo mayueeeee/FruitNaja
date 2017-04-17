@@ -22,6 +22,7 @@ public class Game {
     public static final int DECOR_WIDTH=131,DECOR_HEIGHT=90;
     public static final int FRUIT_WIDTH=70,FRUIT_HEIGHT=70;
     public static final int CHAR_WIDTH=127,CHAR_HEIGHT=182;
+    public static final int ST_WIDTH=212,ST_HEIGHT=90;
     /** Objects Store **/
     private static ArrayList<Person> player = new ArrayList();
 
@@ -40,6 +41,11 @@ public class Game {
         player.add(person);
         int index = player.size();
         return index;
+    }
+
+    public static String getPlayer(String skill){
+
+       return skill;
     }
 
     public static void clearStorePlayer(){
@@ -68,6 +74,7 @@ public class Game {
         }
         return 0;
     }
+
 
     public static void saveHighScore(Person x){
 

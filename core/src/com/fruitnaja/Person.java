@@ -93,6 +93,6 @@ public abstract class Person implements Attackable {
     }
 
     public abstract void useSkill();
-
+    public abstract void useSkill2();
 
 }
