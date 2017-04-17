@@ -18,6 +18,7 @@ public abstract class Person implements Attackable {
     private Vector2 pos;
     private  boolean live;
     private long lastHitTimeS;
+    private int score;
 
 
     TextureRegion[] animationframeS = new TextureRegion[2];
@@ -38,6 +39,14 @@ public abstract class Person implements Attackable {
 
     public int getHp() {
         return hp;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public void setHp(int hp) {

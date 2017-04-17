@@ -31,7 +31,8 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	private Person heal = new Charactor(1);
 	private Person poison = new Charactor(5);
 	private boolean cam2Skill3 =false;
-	private Vector2 poisonFruit;
+	private boolean decreseHP = false;
+	private Vector2 poisonFruit =new Vector2();
 
 	Person player1 = Game.getPlayer(0);
 	Person player2 = Game.getPlayer(1);
@@ -56,8 +57,9 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	Charactor playerf1 = (Charactor) player1;
 	Charactor playerf2 = (Charactor) player2;
 
+
 	int [] roll = {4,4};
-	int colum = 4;
+	int [] colum = {4,4};
     int skill3;
 //	int [] rollRe = {4,4};
 //	int columRe = 4;
@@ -140,7 +142,8 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		/** Load asset **/
 
 
-		/** Generate Decorations **/
+
+        /** Generate Decorations **/
 		for (int y = 0;y <100;y++){
 			for(int z = 0;z < 3;z++){
 				float rand_x = (float)(Math.random()*7000+100);
@@ -419,70 +422,95 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 
 	public void checkHp(TextureRegion [][] hero,TextureRegion [][] heroUse,Charactor charactor,Camera camera,int index ){
 		if (!charactor.isSkillUse()){
-			batch.draw(hero[colum][roll[index]],camera.position.x-310,camera.position.y-350);
+			batch.draw(hero[colum[index]][roll[index]],camera.position.x-310,camera.position.y-350);
 		}
 		else if (TimeUtils.nanoTime()-lastUseSkilTime>1000000000){
 			if(roll[index] == 0){
-				batch.draw(heroUse[colum][roll[index]],camera.position.x+-310,camera.position.y-350);
+				batch.draw(heroUse[colum[index]][roll[index]],camera.position.x+-310,camera.position.y-350);
 				lastUseSkilTime = TimeUtils.nanoTime();
 			}
 			else {
 				roll[index] -=1;
-				batch.draw(heroUse[colum][roll[index]],camera.position.x-310,camera.position.y-350);
+				batch.draw(heroUse[colum[index]][roll[index]],camera.position.x-310,camera.position.y-350);
 				charactor.setSkillUse(false);
 				lastUseSkilTime = TimeUtils.nanoTime();
 			}
 		}
-//		if (!charactor.isSkillUse()){
-//			batch.draw(heroUse[colum][roll],camera.position.x-310,camera.position.y-350);
-//		}
-//		else {
-//			heroUse[colum][roll].dispose;
-//			roll -=1;
-//			batch.draw(heroUse[colum][roll],camera.position.x-310,camera.position.y-350);
-//			charactor.setSkillUse(false);
-//		}
+		if (!decreseHP){
+		    if (charactor.isIncreseHP()){
+		        colum[index]+=1;
+                batch.draw(hero[colum[index]][roll[index]],camera.position.x-310,camera.position.y-350);
+                charactor.setIncreseHP(false);
+            }
+            else {
+                batch.draw(hero[colum[index]][roll[index]],camera.position.x-310,camera.position.y-350);
+            }
+         }
+		else if (TimeUtils.nanoTime()-lastUseSkilTime>1000000000){
+        if(colum[index] == 0){
+            batch.draw(heroUse[colum[index]][roll[index]],camera.position.x+-310,camera.position.y-350);
+            lastUseSkilTime = TimeUtils.nanoTime();
+        }
+        else {
+            colum[index] -=1;
+            batch.draw(heroUse[colum[index]][roll[index]],camera.position.x-310,camera.position.y-350);
+            decreseHP = false;
+            lastUseSkilTime = TimeUtils.nanoTime();
+        }
+    }
 	}
 
 	public void checkHpRe(TextureRegion [][] hero,TextureRegion [][] heroUse,Charactor charactor,Camera camera,int index){
 		if (!charactor.isSkillUse()){
-			batch.draw(hero[colum][roll[index]],camera.position.x+100,camera.position.y+265);
+			batch.draw(hero[colum[index]][roll[index]],camera.position.x+100,camera.position.y+265);
 		}
 		else if (TimeUtils.nanoTime()-lastUseSkilTime>1000000000 ){
 			if(roll[index] == 0){
-				batch.draw(heroUse[colum][roll[index]],camera.position.x+100,camera.position.y+265);
+				batch.draw(heroUse[colum[index]][roll[index]],camera.position.x+100,camera.position.y+265);
 				lastUseSkilTime = TimeUtils.nanoTime();
 			}
 			else {
 				roll[index] -=1;
-				batch.draw(heroUse[colum][roll[index]],camera.position.x+100,camera.position.y+265);
+				batch.draw(heroUse[colum[index]][roll[index]],camera.position.x+100,camera.position.y+265);
 				charactor.setSkillUse(false);
 				lastUseSkilTime = TimeUtils.nanoTime();
 			}
 		}
-//		if (!charactor.isSkillUse()){
-//			batch.draw(heroUse[colum][roll],camera.position.x-310,camera.position.y-350);
-//		}
-//		else {
-//			heroUse[colum][roll].dispose;
-//			roll -=1;
-//			batch.draw(heroUse[colum][roll],camera.position.x-310,camera.position.y-350);
-//			charactor.setSkillUse(false);
-//		}
+		if (!decreseHP){
+            if (charactor.isIncreseHP()){
+                colum[index]+=1;
+                batch.draw(hero[colum[index]][roll[index]],camera.position.x+100,camera.position.y+265);
+                charactor.setIncreseHP(false);
+             }
+            else {
+                batch.draw(hero[colum[index]][roll[index]],camera.position.x+100,camera.position.y+265);
+             }
+        }
+		else if (TimeUtils.nanoTime()-lastUseSkilTime>1000000000){
+            if(colum[index] == 0){
+                batch.draw(heroUse[colum[index]][roll[index]],camera.position.x+100,camera.position.y+265);
+                lastUseSkilTime = TimeUtils.nanoTime();
+            }
+        else {
+            colum[index] -=1;
+            batch.draw(heroUse[colum[index]][roll[index]],camera.position.x+100,camera.position.y+265);
+            decreseHP = false;
+            lastUseSkilTime = TimeUtils.nanoTime();
+            }
+        }
 	}
+
+
 
 	@Override
 	public void render () {
 	    player1_collision = Collision.isCollision(char_rect[0],bush_rect);
         player2_collision = Collision.isCollision(char_rect[1],bush_rect);
         Collision.isCollision(char_body_rect);
-        Collision.checkCollision(char_body_rect[0],fruit_rect);
+        int [] ints = Collision.checkCollision(char_body_rect[0],fruit_rect);
 		etime += Gdx.graphics.getDeltaTime();
 		deltatime = Gdx.graphics.getDeltaTime();
-		if (Gdx.input.isKeyPressed(Input.Keys.G)&&TimeUtils.nanoTime()-lastHitTime>1000000000){
-			heal.setHp(heal.getHp()-50);
-			lastHitTime = TimeUtils.nanoTime();
-		}
+
 		heal.die();
 		if(heal.isLive()==false){
 			System.exit(0);
@@ -496,7 +524,11 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		batch.setProjectionMatrix(camera1.combined);
 		batch.begin();
 		batch.draw(imgB,0,0);
-
+        if (Gdx.input.isKeyPressed(Input.Keys.G)&&TimeUtils.nanoTime()-lastHitTime>1000000000){
+            player1.setHp(player1.getHp()-50);
+            decreseHP = true;
+            lastHitTime = TimeUtils.nanoTime();
+        }
 		for (int y = 0;y <3;y++){
 			for(int z = 0;z < 100;z++){
 				batch.draw(deco[y],bush[y][z].getPosDeco().x,bush[y][z].getPosDeco().y,Game.DECOR_WIDTH,Game.DECOR_HEIGHT);
@@ -505,7 +537,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		}
 //		for(int m=0;m<7;m++){
 //			int n = 0;
-//			checkFruit();
+//
 //			if (n == 0){
 //				batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
 //			}
@@ -518,20 +550,19 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 //				batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
 //			}
 //		}
-        for(int m =0;m<7;m++){
-            for(int n=0;n<20;n++) {
-                batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
-            }
+        fruits[ints[0]][ints[1]].setPick(true);
+        if (fruits[ints[0]][ints[1]].isPick()){
+            fruit[ints[0]].dispose();
+            batch.enableBlending();
         }
-		batch.draw(weapon[0],knife.getPosWeapon().x,knife.getPosWeapon().y);
-        batch.draw(weapon[1],hammer.getPosWeapon().x,hammer.getPosWeapon().y);
+
 		setCamera();
 		setCamera2();
 		move(getSprite((Charactor) player1),player1);
 		move2(getSprite((Charactor) player2),player2);
 		player1.useSkill();
 		checkSkill(playerf1);
-		printPoison();
+
 		checkHp(stUnPlayer1,stPlayer1,playerf1,camera1,0);
 		checkHpRe(stUnPlayer2,stPlayer2,playerf2,camera1,1);
 		batch.end();
@@ -543,7 +574,11 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		batch.setProjectionMatrix(camera2.combined);
 		batch.begin();
 		batch.draw(imgB,0,0);
-
+        if (Gdx.input.isKeyPressed(Input.Keys.L)&&TimeUtils.nanoTime()-lastHitTime>1000000000){
+            player2.setHp(player2.getHp()-50);
+            decreseHP = true;
+            lastHitTime = TimeUtils.nanoTime();
+        }
 		for (int y = 0;y <3;y++){
 			for(int z = 0;z < 100;z++){
 				if(y == 0){
@@ -562,8 +597,6 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 					batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
 				}
 			}
-        batch.draw(weapon[0],knife.getPosWeapon().x,knife.getPosWeapon().y);
-        batch.draw(weapon[1],knife.getPosWeapon().x,knife.getPosWeapon().y);
 		setCamera();
 		setCamera2();
 		move(getSprite((Charactor) player1),player1);

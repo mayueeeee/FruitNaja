@@ -12,6 +12,7 @@ public class Charactor extends Person {
     public int skill;
     private long lastHitTimeS;
     private boolean skillUse;
+    private boolean increseHP;
     private Vector2 trap;
     private boolean [] use = {false,false};
 
@@ -52,6 +53,7 @@ public class Charactor extends Person {
         super();
         this.skill = skill;
         this.skillUse = false;
+        this.increseHP = false;
 
     }
 
@@ -60,10 +62,19 @@ public class Charactor extends Person {
         this.trap.y = this.getPos().y;
     }
 
+    public boolean isIncreseHP() {
+        return increseHP;
+    }
+
+    public void setIncreseHP(boolean increseHP) {
+        this.increseHP = increseHP;
+    }
+
     public void useSkill(){
         if(Gdx.input.isKeyPressed(Input.Keys.Q)&&getStamina()>0&& TimeUtils.nanoTime()-lastHitTimeS>1000000000){
             if (skill == 1&&getHp()<200){
                 setHp(getHp()+50);
+                increseHP = true;
                 setStamina(getStamina()-25);
                 skillUse = true;
             }
@@ -108,6 +119,7 @@ public class Charactor extends Person {
         if(Gdx.input.isKeyPressed(Input.Keys.SLASH)&&getStamina()>0&& TimeUtils.nanoTime()-lastHitTimeS>1000000000){
             if (skill == 1&&getHp()<200){
                 setHp(getHp()+50);
+                increseHP = true;
                 setStamina(getStamina()-25);
                 skillUse = true;
             }
