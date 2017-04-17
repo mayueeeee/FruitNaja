@@ -451,7 +451,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 
 	public void checkHp(TextureRegion [][] hero,TextureRegion [][] heroUse,Charactor charactor,Camera camera,int index ){
 		if (!charactor.isSkillUse()){
-            if (charactor.isIncreseStamina()){
+            if (charactor.isIncreseStamina()&&charactor.getStamina()<100){
                 roll[index]+=1;
                 batch.draw(hero[colum[index]][roll[index]],camera.position.x-310,camera.position.y-350);
                 charactor.setIncreseStamina(false);
@@ -473,7 +473,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 			}
 		}
 		if (!charactor.isDecreseHP()){
-		    if (charactor.isIncreseHP()){
+		    if (charactor.isIncreseHP()&&charactor.getHp()<200){
 		        colum[index]+=1;
                 batch.draw(hero[colum[index]][roll[index]],camera.position.x-310,camera.position.y-350);
                 charactor.setIncreseHP(false);
@@ -501,7 +501,14 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 
 	public void checkHpRe(TextureRegion [][] hero,TextureRegion [][] heroUse,Charactor charactor,Camera camera,int index){
 		if (!charactor.isSkillUse()){
-			batch.draw(hero[colum[index]][roll[index]],camera.position.x+100,camera.position.y+265);
+            if (charactor.isIncreseStamina()&&charactor.getStamina()<100){
+                roll[index]+=1;
+                batch.draw(hero[colum[index]][roll[index]],camera.position.x-310,camera.position.y-350);
+                charactor.setIncreseStamina(false);
+            }
+            else {
+                batch.draw(hero[colum[index]][roll[index]],camera.position.x-310,camera.position.y-350);
+            }
 		}
 		else if (TimeUtils.nanoTime()-lastUseSkilTime>1000000000 ){
 			if(roll[index] == 0){
@@ -516,7 +523,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 			}
 		}
 		if (!charactor.isDecreseHP()){
-            if (charactor.isIncreseHP()){
+            if (charactor.isIncreseHP()&& charactor.getHp()<200){
                 colum[index]+=1;
                 batch.draw(hero[colum[index]][roll[index]],camera.position.x+100,camera.position.y+265);
                 charactor.setIncreseHP(false);

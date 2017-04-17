@@ -1,14 +1,11 @@
 package com.fruitnaja;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 /**
  * Created by user on 12/4/2560.
  */
-public class Fruit implements Catchable {
+public class Fruit  {
     private int style;
 
     private Vector2 posFruit = new Vector2();
@@ -50,8 +47,4 @@ public class Fruit implements Catchable {
         this.posFruit.y = y;
     }
 
-    @Override
-    public int catchObj() {
-        return 0;
-    }
 }
