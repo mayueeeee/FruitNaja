@@ -12,9 +12,17 @@ public class Charactor extends Person {
     public int skill;
     private long lastHitTimeS;
     private boolean skillUse;
-    private boolean increseHP;
-    private Vector2 trap;
+    private boolean increseHP,increseStamina;
+    private Vector2 trap = new Vector2();
     private boolean [] use = {false,false};
+
+    public boolean isIncreseStamina() {
+        return increseStamina;
+    }
+
+    public void setIncreseStamina(boolean increseStamina) {
+        this.increseStamina = increseStamina;
+    }
 
     public Vector2 getTrap() {
         return trap;
@@ -78,7 +86,7 @@ public class Charactor extends Person {
                 setStamina(getStamina()-25);
                 skillUse = true;
             }
-            else if (skill == 2){
+            else if (skill == 5){
                 createTrap();
                 use[0] = true;
                 System.out.println("Trap");
@@ -90,20 +98,20 @@ public class Charactor extends Person {
                 setStamina(getStamina()-25);
                 skillUse = true;
             }
-            else if (skill == 4){
-                skill = (int)(Math.random()*3+1);
-                if (skill == 1&&getHp()<200){
+            else if (skill == 6){
+               int skillT = (int)(Math.random()*3+1);
+                if (skillT == 1&&getHp()<200){
                     setHp(getHp()+50);
                     setStamina(getStamina()-25);
                     skillUse = true;
                 }
-                else if (skill == 2){
+                else if (skillT == 5){
                     createTrap();
                     use[0] = true;
                     setStamina(getStamina()-25);
                     skillUse = true;
                 }
-                else if (skill == 3){
+                else if (skillT == 3){
                     use[1] = true;
                     setStamina(getStamina()-25);
                     skillUse = true;
@@ -123,7 +131,7 @@ public class Charactor extends Person {
                 setStamina(getStamina()-25);
                 skillUse = true;
             }
-            else if (skill == 2){
+            else if (skill == 5){
                 createTrap();
                 use[0] = true;
                 setStamina(getStamina()-25);
@@ -134,20 +142,20 @@ public class Charactor extends Person {
                 setStamina(getStamina()-25);
                 skillUse = true;
             }
-            else if (skill == 4){
-                skill = (int)(Math.random()*3+1);
-                if (skill == 1&&getHp()<200){
+            else if (skill == 6){
+                int skillT = (int)(Math.random()*3+1);
+                if (skillT == 1&&getHp()<200){
                     setHp(getHp()+50);
                     setStamina(getStamina()-25);
                     skillUse = true;
                 }
-                else if (skill == 2){
+                else if (skillT == 5){
                     createTrap();
                     use[0] = true;
                     setStamina(getStamina()-25);
                     skillUse = true;
                 }
-                else if (skill == 3){
+                else if (skillT == 3){
                     use[1] = true;
                     setStamina(getStamina()-25);
                     skillUse = true;

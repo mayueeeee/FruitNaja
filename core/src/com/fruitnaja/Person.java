@@ -82,6 +82,7 @@ public abstract class Person implements Attackable {
         this.stamina = 100;
         this.pos = new Vector2(512/2,300/2);
         this.live = true;
+        this.score = 0;
     }
 
     public void die(){

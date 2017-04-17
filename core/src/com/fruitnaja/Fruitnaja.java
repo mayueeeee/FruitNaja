@@ -23,17 +23,19 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	private Texture img;
 	private Texture imgB;
 	private Texture grid1,grid2,grid3,grid4,grid5,grid6,stUnUseSkillPlayer1,stUnUseSkillPlayer2,stUseSkillPlayer1,stUseSkillPlayer2,stReUnUseSkillPlayer1,stReUnUseSkillPlayer2,stReUseSkillPlayer1,stReUseSkillPlayer2;
-	private Texture trap;
 	private Texture [] fruit = new Texture[7];
     private Texture [] fruitP = new Texture[7];
     private Texture [] weapon = new Texture[2];
 	private Texture [] deco = new Texture[3];
+    private Texture trap ;
+    private Texture win,lose;
 	private long lastHitTime,lastUseSkilTime,lastUseSkilTime2 ;
 	private int x = 0,y = 0;
 	private Person heal = new Charactor(1);
 	private Person poison = new Charactor(5);
 	private boolean cam2Skill3 =false;
 	private boolean decreseHP = false;
+	private boolean trapIn = false;
 	private Vector2 poisonFruit =new Vector2();
 
 	Person player1 = Game.getPlayer(0);
@@ -46,9 +48,8 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	int push1 = 0, push2 = 0,push = 0 ;
 	Decoration [][] bush = new Decoration[3][100];
 	Fruit[][] fruits = new Fruit[7][20];
-	Weapon knife = new Weapon();
-    Weapon hammer = new Weapon();
     ArrayList<Fruit> poisonFruitStore = new ArrayList<Fruit>();
+    ArrayList<Trap> trapStore = new ArrayList<Trap>();
 
 	/** Rectangles for check collision **/
 	Rectangle [][] bush_rect = new Rectangle[3][100];
@@ -56,6 +57,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	Rectangle [] char_rect = new Rectangle[2];
     Rectangle [] char_body_rect = new Rectangle[2];
     ArrayList<Rectangle> poisonFruitStore_rect = new ArrayList<Rectangle>();
+    ArrayList<Rectangle> trapStore_rect = new ArrayList<Rectangle>();
     Collision player1_collision,player2_collision;
 
 	Charactor playerf1 = (Charactor) player1;
@@ -65,6 +67,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	int [] roll = {4,4};
 	int [] colum = {4,4};
     int skill3;
+    int numTrap = 0;
 //	int [] rollRe = {4,4};
 //	int columRe = 4;
 
@@ -74,10 +77,8 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	public String changSkill(int skill){
 		switch (skill){
 			case 1:return "Shield";
-			case 2:return "Heal";
-			case 3:return "Poison";
-			case 4:return "Stun";
 			case 5:return "Trap";
+			case 3:return "Poison";
 			case 6:return "Random";
 		}
 		return "";
@@ -106,7 +107,9 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		grid4 = new Texture("sprite/Grid04.png");
 		grid5 = new Texture("sprite/Grid05.png");
 		grid6 = new Texture("sprite/Grid06.png");
-		trap = new Texture("skill/trap.png");
+        trap = new Texture("skill/trap.png");
+        win = new Texture("win.jpg");
+        lose = new Texture("lose.jpg");
 		weapon[0] = new Texture("weapon/hamm.png");
         weapon[1] = new Texture("weapon/sword.png");
 		stUnUseSkillPlayer1 =new Texture("ST allChar/"+playerS1+"1.png");
@@ -405,9 +408,16 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	}
 
 	public void checkSkill(Charactor charactor){
-	    if (charactor.getSkill() == 2 && charactor.getUse()[0]){
-            batch.draw(trap,charactor.getTrap().x,charactor.getTrap().y);
+	    if (charactor.getSkill() == 5 && charactor.getUse()[0]){
+            trapStore_rect.add(new Rectangle(charactor.getPos().x, charactor.getPos().y,100,100));
+            trapStore.add(new Trap(charactor.getPos().x, charactor.getPos().y));
+            for (Trap x:trapStore) {
+                if(!x.isPick()) {
+                    batch.draw(trap, x.getPosTrap().x, x.getPosTrap().y, 100, 100);
+                }
+            }
             charactor.setUse(false,0);
+
         }
         else if (charactor.getSkill() == 3 && charactor.getUse()[1]){
 	        poisonFruit.add(charactor.getPos().x,charactor.getPos().y);
@@ -416,7 +426,9 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 			poisonFruitStore.add(new Fruit(charactor.getPos().x, charactor.getPos().y,skill3));
 			//batch.draw(fruitP[skill3],poisonFruit.x, poisonFruit.y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
 			for (Fruit x:poisonFruitStore) {
-				batch.draw(fruitP[x.getStyle()],x.getPosFruit().x, x.getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
+			    if(!x.isPick()) {
+                    batch.draw(fruitP[x.getStyle()], x.getPosFruit().x, x.getPosFruit().y, Game.FRUIT_WIDTH, Game.FRUIT_HEIGHT);
+                }
 			}
 			charactor.setUse(false,1);
             cam2Skill3 = true;
@@ -432,9 +444,22 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
         }
     }
 
+    public void printTrap(){
+        for (Trap x:trapStore) {
+            batch.draw(trap, x.getPosTrap().x, x.getPosTrap().y, 100, 100);
+        }
+    }
+
 	public void checkHp(TextureRegion [][] hero,TextureRegion [][] heroUse,Charactor charactor,Camera camera,int index ){
 		if (!charactor.isSkillUse()){
-			batch.draw(hero[colum[index]][roll[index]],camera.position.x-310,camera.position.y-350);
+            if (charactor.isIncreseStamina()){
+                roll[index]+=1;
+                batch.draw(hero[colum[index]][roll[index]],camera.position.x-310,camera.position.y-350);
+                charactor.setIncreseStamina(false);
+            }
+            else {
+                batch.draw(hero[colum[index]][roll[index]],camera.position.x-310,camera.position.y-350);
+            }
 		}
 		else if (TimeUtils.nanoTime()-lastUseSkilTime>1000000000){
 			if(roll[index] == 0){
@@ -512,7 +537,17 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
         }
 	}
 
-
+    public void checkscore(int [] check,Person player,Charactor playerf){
+        switch (check[0]){
+            case 0 : player.setScore(player.getScore()+10); break;
+            case 1 : player.setScore(player.getScore()+20); break;
+            case 2 : player.setHp(player.getHp()+50); playerf.setIncreseHP(true); break;
+            case 3 : player.setStamina(player.getStamina()+25);playerf.setIncreseStamina(true); break;
+            case 4 : player.setScore(player.getScore()+30); break;
+            case 5 : player.setScore(player.getScore()+40); break;
+            case 6 : player.setScore(player.getScore()+50); break;
+        }
+    }
 
 	@Override
 	public void render () {
@@ -521,6 +556,11 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
         Collision.isCollision(char_body_rect);
         int [] check1 = Collision.checkCollision(char_body_rect[0],fruit_rect);
         int [] check2 = Collision.checkCollision(char_body_rect[1],fruit_rect);
+        int checkPoisonFruit1 = Collision.checkCollision(char_body_rect[0],poisonFruitStore_rect);
+        int checkPoisonFruit2 = Collision.checkCollision(char_body_rect[1],poisonFruitStore_rect);
+        int checkTrap1 = Collision.checkCollision(char_body_rect[0],trapStore_rect);
+        int checkTrap2 = Collision.checkCollision(char_body_rect[1],trapStore_rect);
+
 		etime += Gdx.graphics.getDeltaTime();
 		deltatime = Gdx.graphics.getDeltaTime();
 
@@ -558,14 +598,36 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
         }
 		setCamera();
 		setCamera2();
+		if (playerf1.getSkill()!=3){
+            try{
+                poisonFruitStore.remove(checkPoisonFruit1);
+            }catch (Exception e){
+
+            }
+        }
+        if (playerf1.getSkill()!=5){
+            try{
+                trapStore.remove(checkTrap1);
+            }catch (Exception e){
+
+            }
+            printTrap();
+        }
 		move(getSprite((Charactor) player1),player1);
 		move2(getSprite((Charactor) player2),player2);
 		player1.useSkill();
-		checkSkill(playerf1);
-
+        System.out.println(player1.getScore());
+        checkSkill(playerf1);
+        printPoison();
 		checkHp(stUnPlayer1,stPlayer1,playerf1,camera1,0);
 		checkHpRe(stUnPlayer2,stPlayer2,playerf2,camera1,1);
-		batch.end();
+		if(player1.getHp() <= 0 && player2.getHp() > 0){
+		    batch.draw(lose,camera1.position.x-324,camera1.position.y-360,Gdx.graphics.getWidth()/2+50,Gdx.graphics.getHeight()+50);
+        }
+        else if (player2.getHp() <= 0 && player1.getHp() > 0) {
+            batch.draw(win,camera1.position.x-324,camera1.position.y-360,Gdx.graphics.getWidth()/2+50,Gdx.graphics.getHeight()+50);
+        }
+        batch.end();
 
 
 		/*Right Half*/
@@ -593,6 +655,15 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 			}
 		}
 		fruits[check2[0]][check2[1]].setPick(true);
+        switch (check2[0]){
+            case 0 : player2.setScore(player2.getScore()+10); break;
+            case 1 : player2.setScore(player2.getScore()+20); break;
+            case 2 : player2.setHp(player2.getHp()+50); playerf2.setIncreseHP(true); break;
+            case 3 : player2.setStamina(player2.getStamina()+25);playerf2.setIncreseStamina(true); break;
+            case 4 : player2.setScore(player2.getScore()+30); break;
+            case 5 : player2.setScore(player2.getScore()+40); break;
+            case 6 : player2.setScore(player2.getScore()+50); break;
+        }
         for(int m =0;m<7;m++){
 				for(int n=0;n<20;n++) {
 				    if (!fruits[m][n].isPick()){
@@ -602,6 +673,21 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 			}
 		setCamera();
 		setCamera2();
+        if (playerf1.getSkill()!=3){
+            try{
+                poisonFruitStore.remove(checkPoisonFruit2);
+            }catch (Exception e){
+
+            }
+        }
+        if (playerf2.getSkill()!=5){
+            try{
+                trapStore.remove(checkTrap2);
+            }catch (Exception e){
+
+            }
+            printTrap();
+        }
 		move(getSprite((Charactor) player1),player1);
 		move2(getSprite((Charactor) player2),player2);
 		player2.useSkill2();
@@ -609,6 +695,13 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
         printPoison();
 		checkHp(stUnPlayer2,stPlayer2,playerf2,camera2,1);
 		checkHpRe(stUnPlayer1,stPlayer1,playerf1,camera2,0);
+        System.out.println(player2.getScore());
+        if(player1.getHp() <= 0 && player2.getHp() > 0){
+            batch.draw(win,camera2.position.x-324,camera2.position.y-360,Gdx.graphics.getWidth()/2+50,Gdx.graphics.getHeight()+50 );
+        }
+        else if (player2.getHp() <= 0 && player1.getHp() > 0) {
+            batch.draw(lose,camera2.position.x-324,camera2.position.y-360,Gdx.graphics.getWidth()/2+50,Gdx.graphics.getHeight()+50);
+        }
 		batch.end();
 //
 //
