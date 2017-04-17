@@ -1,5 +1,7 @@
 package com.fruitnaja;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import java.io.File;
@@ -13,19 +15,26 @@ import java.io.File;
  */
 
 public class Music {
+
+    //public static Sound punch = Gdx.audio.newSound(Gdx.files.internal("sound/PUNCH.wav"));
+    //public static Sound yeeha = Gdx.audio.newSound(Gdx.files.internal("sound/yee.wav"));
+    //public static Sound tada = Gdx.audio.newSound(Gdx.files.internal("sound/tada.wav"));
+    //public static com.badlogic.gdx.audio.Music edm = Gdx.audio.newMusic(Gdx.files.internal("music/edm.mp3"));
+
     private static MediaPlayer mediaPlayer;
 
     public static void play(){
         int list_no = (int)(Math.random()*2+1);
         System.out.println(list_no);
         play(list_no);
+        //edm.play();
     }
 
     public static void play(int list){
         String bip = "";
         //To prevent Musicplayer is Null when start program
         try{
-            mediaPlayer.stop();
+            //mediaPlayer.stop();
         }
         catch (NullPointerException e){
             System.out.println("No media player!");
@@ -35,7 +44,7 @@ public class Music {
             bip = "music/edm.mp3";
         }
         else if(list == 2){
-            bip = "music/nor.mp3";
+            bip = "music/Windows Error Remix.mp3";
         }
         Media hit = new Media(new File(bip).toURI().toString());
         mediaPlayer = new MediaPlayer(hit);

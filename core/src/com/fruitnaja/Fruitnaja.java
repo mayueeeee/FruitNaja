@@ -87,7 +87,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	public void create () {
 		//font = new BitmapFont(Gdx.files.internal("font/x.fnt"),Gdx.files.internal("font/x.png"), false);
 		font = new BitmapFont();
-        /** Generate camera 1 **/
+		/** Generate camera 1 **/
 		camera1 = new OrthographicCamera(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight());
 		camera1.position.set(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight(),0);
 		camera1.update();
@@ -344,6 +344,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 			}
             if (hit){
                 playerf2.setDecreseHP (true);
+				Gdx.audio.newSound(Gdx.files.internal("sound/PUNCH.wav")).play();
             }
             lastHit2 = TimeUtils.nanoTime();
 		}
@@ -395,6 +396,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 			}
             if (hit){
                 playerf1.setDecreseHP (true);
+				Gdx.audio.newSound(Gdx.files.internal("sound/PUNCH.wav")).play();
             }
             lastHit1 = TimeUtils.nanoTime();
 		}
@@ -495,8 +497,8 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
                 charactor.setHp(player1.getHp()-50);
 			}
     	}
-		font.setColor(Color.WHITE);
-		font.draw(batch, "  300", camera.position.x-200,camera.position.y-335);
+        font.draw(batch, Integer.toString(charactor.getScore()), camera.position.x-190,camera.position.y-335);
+//
 	}
 
 	public void checkHpRe(TextureRegion [][] hero,TextureRegion [][] heroUse,Charactor charactor,Camera camera,int index){
@@ -545,20 +547,21 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
             charactor.setHp(player2.getHp()-50);
             }
         }
-		font.draw(batch, "  300", camera.position.x+260,camera.position.y+280);
+		font.draw(batch, Integer.toString(charactor.getScore()), camera.position.x+260,camera.position.y+280);
+//
 	}
 
-    public void checkscore(int [] chec, Person player, Charactor playerf){
-        switch (chec[0]){
-            case 0 : player.setScore(player.getScore()+10); break;
-            case 1 : player.setScore(player.getScore()+20); break;
-            case 2 : player.setHp(player.getHp()+50); playerf.setIncreseHP(true); break;
-            case 3 : player.setStamina(player.getStamina()+25);playerf.setIncreseStamina(true); break;
-            case 4 : player.setScore(player.getScore()+30); break;
-            case 5 : player.setScore(player.getScore()+40); break;
-            case 6 : player.setScore(player.getScore()+50); break;
-        }
-    }
+	public void checkscore(int [] chec, Person player, Charactor playerf){
+		switch (chec[0]){
+			case 0 : player.setScore(player.getScore()+10); break;
+			case 1 : player.setScore(player.getScore()+20); break;
+			case 2 : player.setHp(player.getHp()+50); playerf.setIncreseHP(true); break;
+			case 3 : player.setStamina(player.getStamina()+25);playerf.setIncreseStamina(true); break;
+			case 4 : player.setScore(player.getScore()+30); break;
+			case 5 : player.setScore(player.getScore()+40); break;
+			case 6 : player.setScore(player.getScore()+50); break;
+		}
+	}
 
 	@Override
 	public void render () {
@@ -599,15 +602,21 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 				//System.out.println("BUSH: "+bush[y][z].getPosDeco().x+" , "+bush[y][z].getPosDeco().y);
 			}
 		}
-		fruits[check1[0]][check1[1]].setPick(true);
-        checkscore(new int[]{check1[0]},player1,playerf1);
-        for(int m =0;m<7;m++){
-            for(int n=0;n<20;n++) {
-                if (!fruits[m][n].isPick()){
-                    batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
-                }
-            }
-        }
+		if(check1[0]!=-1){
+			fruits[check1[0]][check1[1]].setPick(true);
+			Gdx.audio.newSound(Gdx.files.internal("sound/yee.wav")).play();
+		}
+
+        checkscore(check1,player1,playerf1);
+        System.out.println("Score1: "+player1.getScore());
+		//checkscore(check1,player1,playerf1);
+		for(int m =0;m<7;m++){
+			for(int n=0;n<20;n++) {
+				if (!fruits[m][n].isPick()){
+					batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
+				}
+			}
+		}
 		setCamera();
 		setCamera2();
 		if (playerf1.getSkill()!=3){
@@ -635,6 +644,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		checkHpRe(stUnPlayer2,stPlayer2,playerf2,camera1,1);
         if(player1.getHp() <= 0 && player2.getHp() > 0){
 		    batch.draw(lose,camera1.position.x-324,camera1.position.y-360,Gdx.graphics.getWidth()/2+50,Gdx.graphics.getHeight()+50);
+		    //Music.tada.play();
         }
         else if (player2.getHp() <= 0 && player1.getHp() > 0) {
             batch.draw(win,camera1.position.x-324,camera1.position.y-360,Gdx.graphics.getWidth()/2+50,Gdx.graphics.getHeight()+50);
@@ -647,8 +657,6 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		camera2.update();
 		batch.setProjectionMatrix(camera2.combined);
 		batch.begin();
-		font.setUseIntegerPositions(true);
-        font.draw(batch, "Hello World", 200, 200);
 
 		batch.draw(imgB,0,0);
         if (Gdx.input.isKeyPressed(Input.Keys.L)&&TimeUtils.nanoTime()-lastHitTime>1000000000){
@@ -669,53 +677,59 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 				}
 			}
 		}
-		fruits[check2[0]][check2[1]].setPick(true);
-        switch (check2[0]){
-            case 0 : player2.setScore(player2.getScore()+10); break;
-            case 1 : player2.setScore(player2.getScore()+20); break;
-            case 2 : player2.setHp(player2.getHp()+50); playerf2.setIncreseHP(true); break;
-            case 3 : player2.setStamina(player2.getStamina()+25);playerf2.setIncreseStamina(true); break;
-            case 4 : player2.setScore(player2.getScore()+30); break;
-            case 5 : player2.setScore(player2.getScore()+40); break;
-            case 6 : player2.setScore(player2.getScore()+50); break;
-        }
-        for(int m =0;m<7;m++){
-				for(int n=0;n<20;n++) {
-				    if (!fruits[m][n].isPick()){
-                        batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
-                    }
+		if(check2[0]!= -1){
+			fruits[check2[0]][check2[1]].setPick(true);
+			Gdx.audio.newSound(Gdx.files.internal("sound/yee.wav")).play();
+		}
+        checkscore(check2,player2,playerf2);
+        System.out.println("Score2: "+player2.getScore());
+        /*switch (check2[0]){
+			case 0 : player2.setScore(player2.getScore()+10); break;
+			case 1 : player2.setScore(player2.getScore()+20); break;
+			case 2 : player2.setHp(player2.getHp()+50); playerf2.setIncreseHP(true); break;
+			case 3 : player2.setStamina(player2.getStamina()+25);playerf2.setIncreseStamina(true); break;
+			case 4 : player2.setScore(player2.getScore()+30); break;
+			case 5 : player2.setScore(player2.getScore()+40); break;
+			case 6 : player2.setScore(player2.getScore()+50); break;
+		}*/
+		for(int m =0;m<7;m++){
+			for(int n=0;n<20;n++) {
+				if (!fruits[m][n].isPick()){
+					batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
 				}
 			}
+		}
 		setCamera();
 		setCamera2();
-        if (playerf1.getSkill()!=3){
-            try{
-                poisonFruitStore.remove(checkPoisonFruit2);
-            }catch (Exception e){
+		if (playerf1.getSkill()!=3){
+			try{
+				poisonFruitStore.remove(checkPoisonFruit2);
+			}catch (Exception e){
 
-            }
-        }
-        if (playerf2.getSkill()!=5){
-            try{
-                trapStore.remove(checkTrap2);
-            }catch (Exception e){
+			}
+		}
+		if (playerf2.getSkill()!=5){
+			try{
+				trapStore.remove(checkTrap2);
+			}catch (Exception e){
 
-            }
-            printTrap();
-        }
+			}
+			printTrap();
+		}
 		move(getSprite((Charactor) player1),player1,Collision.isCollision(char_body_rect));
 		move2(getSprite((Charactor) player2),player2,Collision.isCollision(char_body_rect));
 		player2.useSkill2();
-        checkSkill(playerf2);
-        printPoison();
+		checkSkill(playerf2);
+		printPoison();
 		checkHp(stUnPlayer2,stPlayer2,playerf2,camera2,1);
 		checkHpRe(stUnPlayer1,stPlayer1,playerf1,camera2,0);
-        if(player1.getHp() <= 0 && player2.getHp() > 0){
-            batch.draw(win,camera2.position.x-324,camera2.position.y-360,Gdx.graphics.getWidth()/2+50,Gdx.graphics.getHeight()+50 );
-        }
-        else if (player2.getHp() <= 0 && player1.getHp() > 0) {
-            batch.draw(lose,camera2.position.x-324,camera2.position.y-360,Gdx.graphics.getWidth()/2+50,Gdx.graphics.getHeight()+50);
-        }
+		if(player1.getHp() <= 0 && player2.getHp() > 0){
+			batch.draw(win,camera2.position.x-324,camera2.position.y-360,Gdx.graphics.getWidth()/2+50,Gdx.graphics.getHeight()+50 );
+			//Music.tada.play();
+		}
+		else if (player2.getHp() <= 0 && player1.getHp() > 0) {
+			batch.draw(lose,camera2.position.x-324,camera2.position.y-360,Gdx.graphics.getWidth()/2+50,Gdx.graphics.getHeight()+50);
+		}
 		batch.end();
 //
 //
@@ -739,7 +753,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	@Override
 	public void dispose () {
 		batch.dispose();
-        font.dispose();
+		font.dispose();
 	}
 
 	@Override

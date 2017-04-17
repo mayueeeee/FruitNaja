@@ -75,16 +75,21 @@ public class Collision {
 
     public static int[] checkCollision(Rectangle player_rect,Rectangle [][] obj_rect){
         boolean tst;
-        int[] returnarr = new int[2];
+        int[] returnarr = {-1,0};
         for (int i = 0; i < obj_rect.length; i++) {
             for (int j = 0; j < obj_rect[i].length; j++) {
-                tst = Intersector.overlaps(player_rect,obj_rect[i][j]);
-                if (tst == true){
-                    System.out.println("Fruit bang on "+i+","+j);
-                    returnarr[0]=i;
-                    returnarr[1]=j;
+                if(obj_rect[i][j] != null){
+                    tst = Intersector.overlaps(player_rect,obj_rect[i][j]);
+                    if (tst == true){
+                        System.out.println("Fruit bang on "+i+","+j);
+                        returnarr[0]=i;
+                        returnarr[1]=j;
+                        obj_rect[i][j] = null;
+                        break;
 
+                    }
                 }
+
             }
 
         }

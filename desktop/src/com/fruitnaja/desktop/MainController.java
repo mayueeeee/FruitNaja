@@ -119,11 +119,13 @@ public class MainController{
 
     //Music page -- Normal Button
     public void playNormal(MouseEvent mouseEvent) {
+        Music.stop();
         Music.play(2);
     }
 
     //Music page -- EDM Button
     public void playEDM(MouseEvent mouseEvent) {
+        Music.stop();
         Music.play(1);
     }
 
