@@ -19,6 +19,7 @@ public abstract class Person implements Attackable {
     private  boolean live;
     private long lastHitTimeS;
 
+
     TextureRegion[] animationframeS = new TextureRegion[2];
     Animation animationS;
     TextureRegion[] animationframeW = new TextureRegion[2];

@@ -44,7 +44,8 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	/** Rectangles for check collision **/
 	Rectangle [][] bush_rect = new Rectangle[3][100];
 	Rectangle [][] fruit_rect = new Rectangle[7][20];
-
+	Rectangle [] char_rect = new Rectangle[2];
+    Collision player1_collision,player2_collision;
 
 	float etime;
 
@@ -102,24 +103,26 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 				float rand_x = (float)(Math.random()*7000+100);
 				float rand_y = (float)(Math.random()*4000+100);
 				fruit_rect[m][n] = new Rectangle(rand_x,rand_y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
+				if(Collision.isCollision(bush_rect,fruit_rect[m][n])){
+                    rand_x = (float)(Math.random()*7000+100);
+                    rand_y = (float)(Math.random()*4000+100);
+                    fruit_rect[m][n] = new Rectangle(rand_x,rand_y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
+                }
 				fruits[m][n] = new Fruit();
-				fruits[m][n].setPosFruit((float)(Math.random()*7000+100),(float)(Math.random()*4000+100));
+				fruits[m][n].setPosFruit(rand_x,rand_y);
 			}
 		}
 
 		setAnimation(getSprite((Charactor) player1),player1);
 		setAnimation(getSprite((Charactor) player2),player2);
-		/* setAnimation(healer,heal);
-		setAnimation(shielder,shield);
-		setAnimation(stuner,stun);
-		setAnimation(traper,trap);
-		setAnimation(poisoner,poison); */
 		setAnimation(poisoner,poison);
 
 		player1.setPosX(camera1.position.x);
 		player1.setPosY(camera1.position.y);
+		char_rect[0] = new Rectangle(camera1.position.x,camera1.position.y,Game.CHAR_WIDTH,Game.CHAR_HEIGHT);
 		player2.setPosX(camera2.position.x);
 		player2.setPosY(camera2.position.y);
+        char_rect[1] = new Rectangle(camera2.position.x,camera2.position.y,Game.CHAR_WIDTH,Game.CHAR_HEIGHT);
 	}
 
 	@Override
@@ -199,19 +202,19 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	}
 
 	public void setCamera(){
-		if (Gdx.input.isKeyPressed(Input.Keys.A)&&player1.getPos().x>512&&player1.getPos().x<6761) {
+		if (Gdx.input.isKeyPressed(Input.Keys.A)&&player1.getPos().x>512&&player1.getPos().x<6761&&!player1_collision.left) {
 			camera1.position.x -= camSpeed * deltatime;
 		}
 
-		else if (Gdx.input.isKeyPressed(Input.Keys.D)&&player1.getPos().x>512&&player1.getPos().x<6761) {
+		else if (Gdx.input.isKeyPressed(Input.Keys.D)&&player1.getPos().x>512&&player1.getPos().x<6761&&!player1_collision.right) {
 			camera1.position.x += camSpeed * deltatime;
 		}
 
-		else if (Gdx.input.isKeyPressed(Input.Keys.S)&&player1.getPos().y<4592&&player1.getPos().y>366) {
+		else if (Gdx.input.isKeyPressed(Input.Keys.S)&&player1.getPos().y<4592&&player1.getPos().y>366&&!player1_collision.buttom) {
 			camera1.position.y -= camSpeed * deltatime;
 		}
 
-		else if (Gdx.input.isKeyPressed(Input.Keys.W)&&player1.getPos().y>366&&player1.getPos().y<4592) {
+		else if (Gdx.input.isKeyPressed(Input.Keys.W)&&player1.getPos().y>366&&player1.getPos().y<4592&&!player1_collision.top) {
 			camera1.position.y += camSpeed * deltatime;
 		}
 	}
@@ -236,21 +239,21 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	}
 
 	public void move(TextureRegion [][] hero,Person person){
-		if(Gdx.input.isKeyPressed(Input.Keys.A)&&person.getPos().x>0){
+		if(Gdx.input.isKeyPressed(Input.Keys.A)&&person.getPos().x>0&&!player1_collision.left){
 			person.setPosX(person.getPos().x-=100*Gdx.graphics.getDeltaTime());
 			batch.draw((TextureRegion) person.animationA.getKeyFrame(etime,true),person.getPos().x,person.getPos().y);
 			push = 1;
 		}
-		else if (Gdx.input.isKeyPressed(Input.Keys.D)&&person.getPos().x<7087){
+		else if (Gdx.input.isKeyPressed(Input.Keys.D)&&person.getPos().x<7087&&!player1_collision.right){
 			person.setPosX(person.getPos().x+=100*Gdx.graphics.getDeltaTime());
 			batch.draw((TextureRegion) person.animationD.getKeyFrame(etime,true),person.getPos().x,person.getPos().y);
 			push = 2;
 		}
-		else if (Gdx.input.isKeyPressed(Input.Keys.W)&&person.getPos().y>0){
+		else if (Gdx.input.isKeyPressed(Input.Keys.W)&&person.getPos().y>0&&!player1_collision.top){
 			person.setPosY(person.getPos().y+=100*Gdx.graphics.getDeltaTime());
 			batch.draw((TextureRegion) person.animationW.getKeyFrame(etime,true),person.getPos().x,person.getPos().y);
 		}
-		else if (Gdx.input.isKeyPressed(Input.Keys.S)&&person.getPos().y<4966){
+		else if (Gdx.input.isKeyPressed(Input.Keys.S)&&person.getPos().y<4966&&!player1_collision.buttom){
 			person.setPosY(person.getPos().y-=100*Gdx.graphics.getDeltaTime());
 			batch.draw((TextureRegion) person.animationS.getKeyFrame(etime,true),person.getPos().x,person.getPos().y);
 		}
@@ -265,6 +268,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		else {
 			batch.draw(hero[0][0], person.getPos().x,person.getPos().y );
 		}
+		char_rect[0] = new Rectangle(person.getPos().x+45,person.getPos().y,48,32);
 	}
 
 	public void move2(TextureRegion [][] hero,Person person){
@@ -297,6 +301,8 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		else {
 			batch.draw(hero[0][0], person.getPos().x,person.getPos().y );
 		}
+        char_rect[1] = new Rectangle(person.getPos().x+45,person.getPos().y,48,32);
+		//char_rect[1].toString();
 	}
 
 	public void checkFruit(){
@@ -311,6 +317,8 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 
 	@Override
 	public void render () {
+	    player1_collision = Collision.isCollision(char_rect[0],bush_rect);
+        player2_collision = Collision.isCollision(char_rect[1],bush_rect);
 		etime += Gdx.graphics.getDeltaTime();
 		deltatime = Gdx.graphics.getDeltaTime();
 		if (Gdx.input.isKeyPressed(Input.Keys.G)&&TimeUtils.nanoTime()-lastHitTime>1000000000){
@@ -356,7 +364,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		setCamera2();
 		move(getSprite((Charactor) player1),player1);
 		move2(getSprite((Charactor) player2),player2);
-		System.out.println(player1.getPos().x+" "+player1.getPos().y);
+		//System.out.println(player1.getPos().x+" "+player1.getPos().y);
 		batch.end();
 
 

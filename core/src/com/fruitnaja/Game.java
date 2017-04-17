@@ -1,6 +1,8 @@
 package com.fruitnaja;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import java.util.ArrayList;
@@ -73,4 +75,6 @@ public class Game {
     public static void loadHighScore(){
 
     }
+
+
 }
