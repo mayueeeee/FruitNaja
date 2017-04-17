@@ -4,11 +4,9 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -37,6 +35,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	private boolean decreseHP = false;
 	private boolean trapIn = false;
 	private Vector2 poisonFruit =new Vector2();
+    private BitmapFont font;
 
 	Person player1 = Game.getPlayer(0);
 	Person player2 = Game.getPlayer(1);
@@ -87,7 +86,9 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 
 	@Override
 	public void create () {
-		/** Generate camera 1 **/
+		//font = new BitmapFont(Gdx.files.internal("font/x.fnt"),Gdx.files.internal("font/x.png"), false);
+		font = new BitmapFont();
+        /** Generate camera 1 **/
 		camera1 = new OrthographicCamera(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight());
 		camera1.position.set(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight(),0);
 		camera1.update();
@@ -484,17 +485,19 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
             }
          }
 		else if (TimeUtils.nanoTime()-lastUseSkilTime>1000000000){
-        if(colum[index] == 0){
-            batch.draw(heroUse[colum[index]][roll[index]],camera.position.x+-310,camera.position.y-350);
-            lastUseSkilTime = TimeUtils.nanoTime();
-        }
-        else {
-            colum[index] -=1;
-            batch.draw(heroUse[colum[index]][roll[index]],camera.position.x-310,camera.position.y-350);
-            decreseHP = false;
-            lastUseSkilTime = TimeUtils.nanoTime();
-        }
-    }
+			if(colum[index] == 0){
+				batch.draw(heroUse[colum[index]][roll[index]],camera.position.x+-310,camera.position.y-350);
+				lastUseSkilTime = TimeUtils.nanoTime();
+			}
+			else {
+				colum[index] -=1;
+				batch.draw(heroUse[colum[index]][roll[index]],camera.position.x-310,camera.position.y-350);
+				decreseHP = false;
+				lastUseSkilTime = TimeUtils.nanoTime();
+			}
+    	}
+		font.setColor(Color.WHITE);
+		font.draw(batch, "  300", camera.position.x-200,camera.position.y-335);
 	}
 
 	public void checkHpRe(TextureRegion [][] hero,TextureRegion [][] heroUse,Charactor charactor,Camera camera,int index){
@@ -535,6 +538,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
             lastUseSkilTime = TimeUtils.nanoTime();
             }
         }
+		font.draw(batch, "  300", camera.position.x+260,camera.position.y+280);
 	}
 
     public void checkscore(int [] check,Person player,Charactor playerf){
@@ -635,6 +639,9 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		camera2.update();
 		batch.setProjectionMatrix(camera2.combined);
 		batch.begin();
+		font.setUseIntegerPositions(true);
+        font.draw(batch, "Hello World", 200, 200);
+
 		batch.draw(imgB,0,0);
         if (Gdx.input.isKeyPressed(Input.Keys.L)&&TimeUtils.nanoTime()-lastHitTime>1000000000){
             player2.setHp(player2.getHp()-50);
@@ -725,6 +732,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	@Override
 	public void dispose () {
 		batch.dispose();
+        font.dispose();
 	}
 
 	@Override
