@@ -58,6 +58,9 @@ public class MainController{
         root = FXMLLoader.load(new URL("file:layouts/main.fxml"));
         stage.getScene().setRoot(root);
         System.out.println("Back btn press");
+        select_skill[0] = null;
+        select_skill[1] = null;
+        //debugSelect();
     }
 
     public void backToMain() throws IOException{
@@ -165,8 +168,8 @@ public class MainController{
         disableSkill(skill_heal);
         disableSkill(skill_poison);
         disableSkill(skill_random);
-        disableSkill(skill_shield);
-        disableSkill(skill_stun);
+        //disableSkill(skill_shield);
+        //disableSkill(skill_stun);
         disableSkill(skill_trap);
     }
 
@@ -207,12 +210,12 @@ public class MainController{
             else if(select_skill[player-1].equals("skill_trap")){
                 enableSkill(skill_trap);
             }
-            else if(select_skill[player-1].equals("skill_shield")){
-                enableSkill(skill_shield);
+            /*else if(select_skill[player-1].equals("skill_shield")){
+                //enableSkill(skill_shield);
             }
             else if(select_skill[player-1].equals("skill_stun")){
-                enableSkill(skill_stun);
-            }
+                //enableSkill(skill_stun);
+            }*/
             else if(select_skill[player-1].equals("skill_random")){
                 enableSkill(skill_random);
             }
@@ -230,48 +233,48 @@ public class MainController{
             if(select_skill[player].equals("skill_heal")){
                 //enableSkill(skill_heal);
                 enableSkill(skill_trap);
-                enableSkill(skill_shield);
-                enableSkill(skill_stun);
+                //enableSkill(skill_shield);
+                //enableSkill(skill_stun);
                 enableSkill(skill_random);
                 enableSkill(skill_poison);
             }
             else if(select_skill[player].equals("skill_trap")){
                 enableSkill(skill_heal);
                 //enableSkill(skill_trap);
-                enableSkill(skill_shield);
-                enableSkill(skill_stun);
+                //enableSkill(skill_shield);
+                //enableSkill(skill_stun);
                 enableSkill(skill_random);
                 enableSkill(skill_poison);
             }
-            else if(select_skill[player].equals("skill_shield")){
+            /*else if(select_skill[player].equals("skill_shield")){
                 enableSkill(skill_heal);
                 enableSkill(skill_trap);
                 //enableSkill(skill_shield);
-                enableSkill(skill_stun);
+                //enableSkill(skill_stun);
                 enableSkill(skill_random);
                 enableSkill(skill_poison);
             }
             else if(select_skill[player].equals("skill_stun")){
                 enableSkill(skill_heal);
                 enableSkill(skill_trap);
-                enableSkill(skill_shield);
+                //enableSkill(skill_shield);
                 //enableSkill(skill_stun);
                 enableSkill(skill_random);
                 enableSkill(skill_poison);
-            }
+            }*/
             else if(select_skill[player].equals("skill_random")){
                 enableSkill(skill_heal);
                 enableSkill(skill_trap);
-                enableSkill(skill_shield);
-                enableSkill(skill_stun);
+                //enableSkill(skill_shield);
+                //enableSkill(skill_stun);
                 //enableSkill(skill_random);
                 enableSkill(skill_poison);
             }
             else if(select_skill[player].equals("skill_poison")){
                 enableSkill(skill_heal);
                 enableSkill(skill_trap);
-                enableSkill(skill_shield);
-                enableSkill(skill_stun);
+                //enableSkill(skill_shield);
+                //enableSkill(skill_stun);
                 enableSkill(skill_random);
                 //enableSkill(skill_poison);
             }
