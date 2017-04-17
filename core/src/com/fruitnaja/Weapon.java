@@ -61,7 +61,7 @@ public class Weapon {
     }
 
     public Weapon() {
-        
+        this.posWeapon = new Vector2((float)(Math.random()*7067),(float)(Math.random()*4684));
     }
 
 }

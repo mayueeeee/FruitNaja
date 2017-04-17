@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
 
 
@@ -22,11 +23,15 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	private Texture grid1,grid2,grid3,grid4,grid5,grid6,stUnUseSkillPlayer1,stUnUseSkillPlayer2,stUseSkillPlayer1,stUseSkillPlayer2,stReUnUseSkillPlayer1,stReUnUseSkillPlayer2,stReUseSkillPlayer1,stReUseSkillPlayer2;
 	private Texture trap;
 	private Texture [] fruit = new Texture[7];
+    private Texture [] fruitP = new Texture[7];
+    private Texture [] weapon = new Texture[2];
 	private Texture [] deco = new Texture[3];
 	private long lastHitTime,lastUseSkilTime,lastUseSkilTime2 ;
 	private int x = 0,y = 0;
 	private Person heal = new Charactor(1);
 	private Person poison = new Charactor(5);
+	private boolean cam2Skill3 =false;
+	private Vector2 poisonFruit;
 
 	Person player1 = Game.getPlayer(0);
 	Person player2 = Game.getPlayer(1);
@@ -38,6 +43,9 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	int push1 = 0, push2 = 0,push = 0 ;
 	Decoration [][] bush = new Decoration[3][100];
 	Fruit[][] fruits = new Fruit[7][20];
+	Weapon knife = new Weapon();
+    Weapon hammer = new Weapon();
+
 	/** Rectangles for check collision **/
 	Rectangle [][] bush_rect = new Rectangle[3][100];
 	Rectangle [][] fruit_rect = new Rectangle[7][20];
@@ -50,6 +58,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 
 	int [] roll = {4,4};
 	int colum = 4;
+    int skill3;
 //	int [] rollRe = {4,4};
 //	int columRe = 4;
 
@@ -92,6 +101,8 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		grid5 = new Texture("sprite/Grid05.png");
 		grid6 = new Texture("sprite/Grid06.png");
 		trap = new Texture("skill/trap.png");
+		weapon[0] = new Texture("weapon/hamm.png");
+        weapon[1] = new Texture("weapon/sword.png");
 		stUnUseSkillPlayer1 =new Texture("ST allChar/"+playerS1+"1.png");
 		stUnUseSkillPlayer2 =new Texture("ST allChar/"+playerS2+"1.png");
 		stUseSkillPlayer1 =new Texture("ST allChar/"+playerS1+"2.png");
@@ -103,6 +114,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		for(int q = 0; q<7;q++){
 			int t =q+1;
 			fruit[q] = new Texture("fruits/"+t+".png");
+			fruitP[q] = new Texture("poison/"+t+".png");
 		}
 		for(int q = 0; q<3;q++){
 			int t =q+1;
@@ -385,11 +397,31 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		}
 	}
 
+	public void  checkSkill(Charactor charactor){
+	    if (charactor.getSkill() == 2 && charactor.getUse()[0]){
+            batch.draw(trap,charactor.getTrap().x,charactor.getTrap().y);
+            charactor.setUse(false,0);
+        }
+        else if (charactor.getSkill() == 3 && charactor.getUse()[1]){
+	        poisonFruit.add(charactor.getPos().x,charactor.getPos().y);
+            skill3 = (int)(Math.random()*6);
+			batch.draw(fruitP[skill3],poisonFruit.x, poisonFruit.y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
+            charactor.setUse(false,1);
+            cam2Skill3 = true;
+        }
+    }
+
+    public void printPoison(){
+	    if (cam2Skill3){
+	        batch.draw(fruit[skill3],poisonFruit.x,poisonFruit.y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
+        }
+    }
+
 	public void checkHp(TextureRegion [][] hero,TextureRegion [][] heroUse,Charactor charactor,Camera camera,int index ){
 		if (!charactor.isSkillUse()){
 			batch.draw(hero[colum][roll[index]],camera.position.x-310,camera.position.y-350);
 		}
-		else if (TimeUtils.nanoTime()-lastUseSkilTime>1000000000 ){
+		else if (TimeUtils.nanoTime()-lastUseSkilTime>1000000000){
 			if(roll[index] == 0){
 				batch.draw(heroUse[colum][roll[index]],camera.position.x+-310,camera.position.y-350);
 				lastUseSkilTime = TimeUtils.nanoTime();
@@ -471,27 +503,35 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 				//System.out.println("BUSH: "+bush[y][z].getPosDeco().x+" , "+bush[y][z].getPosDeco().y);
 			}
 		}
-		for(int m=0;m<7;m++){
-			int n = 0;
-			checkFruit();
-			if (n == 0){
-				batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
-			}
-			else if(fruits[m][n].isPick()){
-				fruit[m].dispose();
-				n += 1;
-				System.out.println(n);
-			}
-			else {
-				batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
-			}
-		}
+//		for(int m=0;m<7;m++){
+//			int n = 0;
+//			checkFruit();
+//			if (n == 0){
+//				batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
+//			}
+//			else if(fruits[m][n].isPick()){
+//				fruit[m].dispose();
+//				n += 1;
+//				System.out.println(n);
+//			}
+//			else {
+//				batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
+//			}
+//		}
+        for(int m =0;m<7;m++){
+            for(int n=0;n<20;n++) {
+                batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
+            }
+        }
+		batch.draw(weapon[0],knife.getPosWeapon().x,knife.getPosWeapon().y);
+        batch.draw(weapon[1],hammer.getPosWeapon().x,hammer.getPosWeapon().y);
 		setCamera();
 		setCamera2();
 		move(getSprite((Charactor) player1),player1);
 		move2(getSprite((Charactor) player2),player2);
 		player1.useSkill();
-		System.out.println(playerf1.getStamina());
+		checkSkill(playerf1);
+		printPoison();
 		checkHp(stUnPlayer1,stPlayer1,playerf1,camera1,0);
 		checkHpRe(stUnPlayer2,stPlayer2,playerf2,camera1,1);
 		batch.end();
@@ -517,21 +557,20 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 				}
 			}
 		}
-		if((camera1.position.x>960&&camera1.position.x<1000)&&(camera1.position.y<1040&&camera1.position.y>995)||(camera2.position.x>960&&camera2.position.x<1000)&&(camera2.position.y<1040&&camera2.position.y>995)){
-			batch.enableBlending();
-		}
-		else {
-			for(int m =0;m<7;m++){
+        for(int m =0;m<7;m++){
 				for(int n=0;n<20;n++) {
 					batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
 				}
 			}
-		}
+        batch.draw(weapon[0],knife.getPosWeapon().x,knife.getPosWeapon().y);
+        batch.draw(weapon[1],knife.getPosWeapon().x,knife.getPosWeapon().y);
 		setCamera();
 		setCamera2();
 		move(getSprite((Charactor) player1),player1);
 		move2(getSprite((Charactor) player2),player2);
 		player2.useSkill2();
+        checkSkill(playerf2);
+        printPoison();
 		checkHp(stUnPlayer2,stPlayer2,playerf2,camera2,1);
 		checkHpRe(stUnPlayer1,stPlayer1,playerf1,camera2,0);
 		batch.end();

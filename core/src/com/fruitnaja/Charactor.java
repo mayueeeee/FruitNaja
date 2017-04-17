@@ -13,6 +13,23 @@ public class Charactor extends Person {
     private long lastHitTimeS;
     private boolean skillUse;
     private Vector2 trap;
+    private boolean [] use = {false,false};
+
+    public Vector2 getTrap() {
+        return trap;
+    }
+
+    public void setTrap(Vector2 trap) {
+        this.trap = trap;
+    }
+
+    public boolean[] getUse() {
+        return use;
+    }
+
+    public void setUse(boolean use,int num) {
+        this.use[num] = use;
+    }
 
     public boolean isSkillUse() {
         return skillUse;
@@ -48,29 +65,40 @@ public class Charactor extends Person {
             if (skill == 1&&getHp()<200){
                 setHp(getHp()+50);
                 setStamina(getStamina()-25);
+                skillUse = true;
             }
             else if (skill == 2){
                 createTrap();
+                use[0] = true;
+                System.out.println("Trap");
                 setStamina(getStamina()-25);
+                skillUse = true;
             }
             else if (skill == 3){
+                use[1] = true;
                 setStamina(getStamina()-25);
+                skillUse = true;
             }
             else if (skill == 4){
                 skill = (int)(Math.random()*3+1);
                 if (skill == 1&&getHp()<200){
                     setHp(getHp()+50);
                     setStamina(getStamina()-25);
+                    skillUse = true;
                 }
                 else if (skill == 2){
+                    createTrap();
+                    use[0] = true;
                     setStamina(getStamina()-25);
+                    skillUse = true;
                 }
                 else if (skill == 3){
+                    use[1] = true;
                     setStamina(getStamina()-25);
+                    skillUse = true;
                 }
             }
             lastHitTimeS = TimeUtils.nanoTime();
-            skillUse = true;
             System.out.println();
         }
 
@@ -81,29 +109,39 @@ public class Charactor extends Person {
             if (skill == 1&&getHp()<200){
                 setHp(getHp()+50);
                 setStamina(getStamina()-25);
+                skillUse = true;
             }
             else if (skill == 2){
+                createTrap();
+                use[0] = true;
                 setStamina(getStamina()-25);
+                skillUse = true;
             }
             else if (skill == 3){
+                use[1] = true;
                 setStamina(getStamina()-25);
+                skillUse = true;
             }
             else if (skill == 4){
                 skill = (int)(Math.random()*3+1);
                 if (skill == 1&&getHp()<200){
                     setHp(getHp()+50);
                     setStamina(getStamina()-25);
+                    skillUse = true;
                 }
                 else if (skill == 2){
+                    createTrap();
+                    use[0] = true;
                     setStamina(getStamina()-25);
+                    skillUse = true;
                 }
                 else if (skill == 3){
+                    use[1] = true;
                     setStamina(getStamina()-25);
+                    skillUse = true;
                 }
             }
             lastHitTimeS = TimeUtils.nanoTime();
-            skillUse = true;
-            System.out.println();
         }
 
     }
