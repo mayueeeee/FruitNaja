@@ -27,13 +27,12 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	private Texture [] deco = new Texture[3];
     private Texture trap ;
     private Texture win,lose;
-	private long lastHitTime,lastUseSkilTime,lastUseSkilTime2 ;
+	private long lastHitTime,lastUseSkilTime,lastUseSkilTime2,lastHit1,lastHit2 ;
 	private int x = 0,y = 0;
 	private Person heal = new Charactor(1);
 	private Person poison = new Charactor(5);
 	private boolean cam2Skill3 =false;
 	private boolean decreseHP = false;
-	private boolean trapIn = false;
 	private Vector2 poisonFruit =new Vector2();
     private BitmapFont font;
 
@@ -305,7 +304,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 
 	}
 
-	public void move(TextureRegion [][] hero,Person person){
+	public void move(TextureRegion [][] hero,Person person,boolean hit){
         if (person.getPos().y<=0){
             person.setPosY(1);
         }
@@ -336,22 +335,27 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 			person.setPosY(person.getPos().y-=100*Gdx.graphics.getDeltaTime());
 			batch.draw((TextureRegion) person.animationS.getKeyFrame(etime,true),person.getPos().x,person.getPos().y);
 		}
-		else if (Gdx.input.isKeyPressed(Input.Keys.V)){
+		else if (Gdx.input.isKeyPressed(Input.Keys.V)&& TimeUtils.nanoTime()-lastHit2>1000000000){
 			if (push == 1){
 				batch.draw((TextureRegion) person.animationAttackLeft.getKeyFrame(etime,true),person.getPos().x,person.getPos().y);
 			}
 			else {
 				batch.draw((TextureRegion) person.animationAttackRight.getKeyFrame(etime,true),person.getPos().x,person.getPos().y);
 			}
+            if (hit){
+                playerf2.setDecreseHP (true);
+            }
+            lastHit2 = TimeUtils.nanoTime();
 		}
 		else {
 			batch.draw(hero[0][0], person.getPos().x,person.getPos().y );
 		}
 		char_rect[0] = new Rectangle(person.getPos().x+45,person.getPos().y,48,32);
 		char_body_rect[0] = new Rectangle(person.getPos().x+15,person.getPos().y,106,75);
+
 	}
 
-	public void move2(TextureRegion [][] hero,Person person){
+	public void move2(TextureRegion [][] hero,Person person,boolean hit){
 		if (person.getPos().y<=0){
 			person.setPosY(1);
 		}
@@ -382,13 +386,17 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 			person.setPosY(person.getPos().y-=100*Gdx.graphics.getDeltaTime());
 			batch.draw((TextureRegion) person.animationS.getKeyFrame(etime,true),person.getPos().x,person.getPos().y);
 		}
-		else if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+		else if (Gdx.input.isKeyPressed(Input.Keys.ENTER)&&TimeUtils.nanoTime()-lastHit1>1000000000){
 			if (push == 1){
 				batch.draw((TextureRegion) person.animationAttackLeft.getKeyFrame(etime,true),person.getPos().x,person.getPos().y);
 			}
 			else {
 				batch.draw((TextureRegion) person.animationAttackRight.getKeyFrame(etime,true),person.getPos().x,person.getPos().y);
 			}
+            if (hit){
+                playerf1.setDecreseHP (true);
+            }
+            lastHit1 = TimeUtils.nanoTime();
 		}
 		else {
 			batch.draw(hero[0][0], person.getPos().x,person.getPos().y );
@@ -396,16 +404,6 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
         char_rect[1] = new Rectangle(person.getPos().x+45,person.getPos().y,48,32);
         char_body_rect[1] = new Rectangle(person.getPos().x+15,person.getPos().y,106,75);
 		//char_rect[1].toString();
-	}
-
-	public void checkFruit(){
-		for(int m =0;m<7;m++){
-			for (int n = 0; n < 20; n++){
-				if((camera1.position.x>fruits[m][n].getPosFruit().x-47&&camera1.position.x<fruits[m][n].getPosFruit().x+47)&&(camera1.position.y<fruits[m][n].getPosFruit().x+19&&camera1.position.y>fruits[m][n].getPosFruit().y-19)||(camera2.position.x>fruits[m][n].getPosFruit().x-47&&camera2.position.x<fruits[m][n].getPosFruit().x+47)&&(camera2.position.y<fruits[m][n].getPosFruit().x+19&&camera2.position.y>fruits[m][n].getPosFruit().y-19)){
-					fruits[m][n].setPick(true);
-				}
-			}
-		}
 	}
 
 	public void checkSkill(Charactor charactor){
@@ -474,7 +472,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 				lastUseSkilTime = TimeUtils.nanoTime();
 			}
 		}
-		if (!decreseHP){
+		if (!charactor.isDecreseHP()){
 		    if (charactor.isIncreseHP()){
 		        colum[index]+=1;
                 batch.draw(hero[colum[index]][roll[index]],camera.position.x-310,camera.position.y-350);
@@ -492,8 +490,9 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 			else {
 				colum[index] -=1;
 				batch.draw(heroUse[colum[index]][roll[index]],camera.position.x-310,camera.position.y-350);
-				decreseHP = false;
+				charactor.setDecreseHP(false);
 				lastUseSkilTime = TimeUtils.nanoTime();
+                charactor.setHp(player1.getHp()-50);
 			}
     	}
 		font.setColor(Color.WHITE);
@@ -516,7 +515,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 				lastUseSkilTime = TimeUtils.nanoTime();
 			}
 		}
-		if (!decreseHP){
+		if (!charactor.isDecreseHP()){
             if (charactor.isIncreseHP()){
                 colum[index]+=1;
                 batch.draw(hero[colum[index]][roll[index]],camera.position.x+100,camera.position.y+265);
@@ -534,15 +533,16 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
         else {
             colum[index] -=1;
             batch.draw(heroUse[colum[index]][roll[index]],camera.position.x+100,camera.position.y+265);
-            decreseHP = false;
+            charactor.setDecreseHP(false);
             lastUseSkilTime = TimeUtils.nanoTime();
+            charactor.setHp(player2.getHp()-50);
             }
         }
 		font.draw(batch, "  300", camera.position.x+260,camera.position.y+280);
 	}
 
-    public void checkscore(int [] check,Person player,Charactor playerf){
-        switch (check[0]){
+    public void checkscore(int [] chec, Person player, Charactor playerf){
+        switch (chec[0]){
             case 0 : player.setScore(player.getScore()+10); break;
             case 1 : player.setScore(player.getScore()+20); break;
             case 2 : player.setHp(player.getHp()+50); playerf.setIncreseHP(true); break;
@@ -582,7 +582,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		batch.begin();
 		batch.draw(imgB,0,0);
         if (Gdx.input.isKeyPressed(Input.Keys.G)&&TimeUtils.nanoTime()-lastHitTime>1000000000){
-            player1.setHp(player1.getHp()-50);
+
             decreseHP = true;
             lastHitTime = TimeUtils.nanoTime();
         }
@@ -593,6 +593,7 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 			}
 		}
 		fruits[check1[0]][check1[1]].setPick(true);
+        checkscore(new int[]{check1[0]},player1,playerf1);
         for(int m =0;m<7;m++){
             for(int n=0;n<20;n++) {
                 if (!fruits[m][n].isPick()){
@@ -617,15 +618,15 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
             }
             printTrap();
         }
-		move(getSprite((Charactor) player1),player1);
-		move2(getSprite((Charactor) player2),player2);
-		player1.useSkill();
-        System.out.println(player1.getScore());
+		move(getSprite((Charactor) player1),player1,Collision.isCollision(char_body_rect));
+		move2(getSprite((Charactor) player2),player2,Collision.isCollision(char_body_rect));
+        System.out.println(check1[0]);
+        player1.useSkill();
         checkSkill(playerf1);
         printPoison();
 		checkHp(stUnPlayer1,stPlayer1,playerf1,camera1,0);
 		checkHpRe(stUnPlayer2,stPlayer2,playerf2,camera1,1);
-		if(player1.getHp() <= 0 && player2.getHp() > 0){
+        if(player1.getHp() <= 0 && player2.getHp() > 0){
 		    batch.draw(lose,camera1.position.x-324,camera1.position.y-360,Gdx.graphics.getWidth()/2+50,Gdx.graphics.getHeight()+50);
         }
         else if (player2.getHp() <= 0 && player1.getHp() > 0) {
@@ -695,14 +696,13 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
             }
             printTrap();
         }
-		move(getSprite((Charactor) player1),player1);
-		move2(getSprite((Charactor) player2),player2);
+		move(getSprite((Charactor) player1),player1,Collision.isCollision(char_body_rect));
+		move2(getSprite((Charactor) player2),player2,Collision.isCollision(char_body_rect));
 		player2.useSkill2();
         checkSkill(playerf2);
         printPoison();
 		checkHp(stUnPlayer2,stPlayer2,playerf2,camera2,1);
 		checkHpRe(stUnPlayer1,stPlayer1,playerf1,camera2,0);
-        System.out.println(player2.getScore());
         if(player1.getHp() <= 0 && player2.getHp() > 0){
             batch.draw(win,camera2.position.x-324,camera2.position.y-360,Gdx.graphics.getWidth()/2+50,Gdx.graphics.getHeight()+50 );
         }

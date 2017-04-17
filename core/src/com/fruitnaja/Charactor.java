@@ -12,9 +12,17 @@ public class Charactor extends Person {
     public int skill;
     private long lastHitTimeS;
     private boolean skillUse;
-    private boolean increseHP,increseStamina;
+    private boolean increseHP,increseStamina,decreseHP;
     private Vector2 trap = new Vector2();
     private boolean [] use = {false,false};
+
+    public boolean isDecreseHP() {
+        return decreseHP;
+    }
+
+    public void setDecreseHP(boolean decreseHP) {
+        this.decreseHP = decreseHP;
+    }
 
     public boolean isIncreseStamina() {
         return increseStamina;
@@ -62,7 +70,7 @@ public class Charactor extends Person {
         this.skill = skill;
         this.skillUse = false;
         this.increseHP = false;
-
+        this.decreseHP = false;
     }
 
     public  void createTrap(){
