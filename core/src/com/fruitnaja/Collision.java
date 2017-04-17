@@ -67,7 +67,7 @@ public class Collision {
         boolean tst;
         tst = Intersector.overlaps(player_rect[0],player_rect[1]);
         if (tst==true){
-            //System.out.println("Bang!!!");
+            System.out.println("Player!!!");
             return true;
         }
         return false;
