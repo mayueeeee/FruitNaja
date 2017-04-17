@@ -507,7 +507,8 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 	    player1_collision = Collision.isCollision(char_rect[0],bush_rect);
         player2_collision = Collision.isCollision(char_rect[1],bush_rect);
         Collision.isCollision(char_body_rect);
-        int [] ints = Collision.checkCollision(char_body_rect[0],fruit_rect);
+        int [] check1 = Collision.checkCollision(char_body_rect[0],fruit_rect);
+        int [] check2 = Collision.checkCollision(char_body_rect[1],fruit_rect);
 		etime += Gdx.graphics.getDeltaTime();
 		deltatime = Gdx.graphics.getDeltaTime();
 
@@ -535,27 +536,14 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 				//System.out.println("BUSH: "+bush[y][z].getPosDeco().x+" , "+bush[y][z].getPosDeco().y);
 			}
 		}
-//		for(int m=0;m<7;m++){
-//			int n = 0;
-//
-//			if (n == 0){
-//				batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
-//			}
-//			else if(fruits[m][n].isPick()){
-//				fruit[m].dispose();
-//				n += 1;
-//				System.out.println(n);
-//			}
-//			else {
-//				batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
-//			}
-//		}
-        fruits[ints[0]][ints[1]].setPick(true);
-        if (fruits[ints[0]][ints[1]].isPick()){
-            fruit[ints[0]].dispose();
-            batch.enableBlending();
+		fruits[check1[0]][check1[1]].setPick(true);
+        for(int m =0;m<7;m++){
+            for(int n=0;n<20;n++) {
+                if (!fruits[m][n].isPick()){
+                    batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
+                }
+            }
         }
-
 		setCamera();
 		setCamera2();
 		move(getSprite((Charactor) player1),player1);
@@ -592,9 +580,12 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 				}
 			}
 		}
+		fruits[check2[0]][check2[1]].setPick(true);
         for(int m =0;m<7;m++){
 				for(int n=0;n<20;n++) {
-					batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
+				    if (!fruits[m][n].isPick()){
+                        batch.draw(fruit[m],fruits[m][n].getPosFruit().x,fruits[m][n].getPosFruit().y,Game.FRUIT_WIDTH,Game.FRUIT_HEIGHT);
+                    }
 				}
 			}
 		setCamera();
