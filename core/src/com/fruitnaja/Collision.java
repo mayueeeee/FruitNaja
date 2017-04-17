@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
- * Created by nutno on 17/4/2560.
+ * Created by Sarunyu Chankong on 12/4/2560.
  */
 public class Collision {
     public boolean intersection,top,buttom,left,right;
@@ -47,7 +47,6 @@ public class Collision {
         return new Collision(coll_top,coll_buttom,coll_left,coll_right);
     }
 
-
     public static boolean isCollision(Rectangle[][] decorator_rect, Rectangle fruit_rect){
         boolean tst;
         for (Rectangle[] x:decorator_rect) {
@@ -60,5 +59,33 @@ public class Collision {
         }
         return false;
 
+    }
+
+    public static boolean isCollision(Rectangle[] player_rect){
+        boolean tst;
+        tst = Intersector.overlaps(player_rect[0],player_rect[1]);
+        if (tst==true){
+            //System.out.println("Bang!!!");
+            return true;
+        }
+        return false;
+    }
+
+    public static int[] checkCollision(Rectangle player_rect,Rectangle [][] obj_rect){
+        boolean tst;
+        int[] returnarr = new int[2];
+        for (int i = 0; i < obj_rect.length; i++) {
+            for (int j = 0; j < obj_rect[i].length; j++) {
+                tst = Intersector.overlaps(player_rect,obj_rect[i][j]);
+                if (tst == true){
+                    System.out.println("Fruit bang!");
+                    returnarr[0]=i;
+                    returnarr[1]=j;
+
+                }
+            }
+
+        }
+        return returnarr;
     }
 }
