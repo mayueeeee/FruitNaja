@@ -503,11 +503,11 @@ public class Fruitnaja extends ApplicationAdapter implements ApplicationListener
 		if (!charactor.isSkillUse()){
             if (charactor.isIncreseStamina()&&charactor.getStamina()<100){
                 roll[index]+=1;
-                batch.draw(hero[colum[index]][roll[index]],camera.position.x-310,camera.position.y-350);
+                batch.draw(hero[colum[index]][roll[index]],camera.position.x+100,camera.position.y+265);
                 charactor.setIncreseStamina(false);
             }
             else {
-                batch.draw(hero[colum[index]][roll[index]],camera.position.x-310,camera.position.y-350);
+                batch.draw(hero[colum[index]][roll[index]],camera.position.x+100,camera.position.y+265);
             }
 		}
 		else if (TimeUtils.nanoTime()-lastUseSkilTime>1000000000 ){
