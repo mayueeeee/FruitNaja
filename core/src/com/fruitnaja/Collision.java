@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Created by Sarunyu Chankong on 12/4/2560.
  */
 public class Collision {
-    public boolean intersection,top,buttom,left,right;
+    public boolean intersection,top,buttom,left,right,trap;
 
     public Collision() {
     }
